@@ -1,0 +1,14 @@
+# Visual regression — diffs are ephemeral, never commit them
+tests/diff/
+tests/report.json
+
+# Goldens ARE committed — they are the source of truth
+# tests/golden/ is tracked
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# macOS
+.DS_Store

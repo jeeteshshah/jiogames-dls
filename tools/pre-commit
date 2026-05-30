@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# ============================================================
+# JioGames DLS — git pre-commit hook
+# Installed by: tools/install-hooks.sh
+#
+# Checks only staged .html and .css files — fast.
+# Blocks commit if tokens.css is stale or violations found.
+# ============================================================
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+fail=0
+
+RED=$'\033[31m'; GRN=$'\033[32m'; YEL=$'\033[33m'; BLD=$'\033[1m'; OFF=$'\033[0m'
+
+echo "${BLD}JioGames DLS pre-commit check…${OFF}"
+
+# ── 1. Token pipeline ────────────────────────────────────────
+if python3 "$ROOT/tokens/build.py" --check; then
+  echo "${GRN}✓ tokens.css current${OFF}"
+else
+  echo "${RED}✗ tokens.css stale — run: python3 tokens/build.py && git add tokens/tokens.css${OFF}"
+  fail=1
+fi
+
+# ── 2. Staged files only ────────────────────────────────────
+staged=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(css|html)$' | grep -v 'tokens\.css' || true)
+
+if [ -z "$staged" ]; then
+  echo "${GRN}✓ No staged .css/.html files to validate${OFF}"
+else
+  echo "Validating staged files:"
+  echo "$staged" | sed 's/^/  /'
+  # Build absolute paths
+  staged_abs=$(echo "$staged" | xargs -I{} echo "$ROOT/{}")
+  if bash "$ROOT/tokens/validate.sh" $staged_abs; then
+    echo "${GRN}✓ No violations${OFF}"
+  else
+    fail=1
+  fi
+fi
+
+[ $fail -ne 0 ] && echo "${RED}${BLD}✗ Commit blocked — fix violations above${OFF}"
+exit $fail

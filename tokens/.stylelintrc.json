@@ -1,0 +1,29 @@
+{
+  "$comment": "JioGames DLS lint guardrails. Install: npm i -D stylelint. Run: npx stylelint '**/*.css'. tokens.css is the only file allowed raw values.",
+  "rules": {
+    "color-no-hex": [true, {
+      "message": "Raw hex banned in components — use var(--token) from tokens.css"
+    }],
+    "color-named": ["never", {
+      "message": "Named colours (black/white/etc) banned — use tokens"
+    }],
+    "declaration-property-value-disallowed-list": {
+      "/^transition/": ["/all/"],
+      "/color|background|border|fill|stroke|box-shadow/": [
+        "/#6366f1|#8b5cf6|#7c3aed|#3b82f6|#6478ff/",
+        "/rgba\\(\\s*(80|100),\\s*1[0-2][0-9]/"
+      ],
+      "font-family": ["/^['\"]?(Inter|Outfit|Roboto|Helvetica)/"]
+    },
+    "declaration-property-value-no-unknown": true
+  },
+  "overrides": [
+    {
+      "files": ["**/tokens.css"],
+      "rules": {
+        "color-no-hex": null,
+        "color-named": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=393">
+<title>JioGames DLS — Component Showcase</title>
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+/* ── Showcase shell ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  font-family: var(--jio-font);
+  color: var(--text);
+  padding: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+}
+.section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: var(--space-1-5);
+}
+.row {
+  display: flex; flex-wrap: wrap;
+  gap: var(--space-1-5); align-items: center;
+}
+.col { display: flex; flex-direction: column; gap: var(--space-1-5); }
+
+/* ── Button ─────────────────────────────────────── */
+.btn-primary {
+  width: 100%; height: var(--ctrl-h);
+  border-radius: var(--pill);
+  padding: 0 var(--component-padding);
+  background: var(--jio); color: var(--text-inv);
+  border: none; cursor: pointer; font-family: var(--jio-font);
+  font-size: 16px; font-weight: 700; letter-spacing: -.2px;
+  transition: transform var(--dur-fast) var(--spring), opacity var(--dur-fast);
+}
+.btn-primary:disabled { opacity: .32; cursor: not-allowed; }
+.btn-cta-sm {
+  height: var(--ctrl-h-sm);
+  padding: 0 var(--space-3);
+  border-radius: var(--pill); border: none; cursor: pointer;
+  font-family: var(--jio-font); font-size: 13px; font-weight: 700;
+  background: var(--jio); color: var(--text-inv);
+}
+.btn-ghost {
+  height: var(--ctrl-h-ghost);
+  padding: 0 var(--space-2);
+  border-radius: var(--pill); border: none; cursor: pointer;
+  background: none; font-family: var(--jio-font);
+  font-size: 13px; font-weight: 500; color: var(--text3);
+}
+.btn-secondary {
+  height: var(--ctrl-h);
+  border-radius: var(--pill);
+  padding: 0 var(--component-padding);
+  background: var(--glass-1);
+  border: 1.5px solid var(--border); color: var(--text);
+  cursor: pointer; font-family: var(--jio-font);
+  font-size: 16px; font-weight: 700;
+}
+.btn-ultimate {
+  background: var(--ultimate); color: var(--text-inv);
+}
+
+/* ── OTP ────────────────────────────────────────── */
+.otp-row { display: flex; gap: var(--space-1-5); justify-content: center; }
+.otp-box {
+  width: var(--otp-box-w); height: var(--otp-box-h);
+  border-radius: var(--r4); background: var(--glass-1);
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 700; color: var(--text);
+  font-family: var(--jio-font);
+}
+.otp-box.active { border-color: var(--jio); box-shadow: 0 0 0 3px rgba(0,168,89,.15); }
+.otp-box.filled { border-color: var(--jio); background: rgba(0,168,89,.09); }
+
+/* ── Chip ───────────────────────────────────────── */
+.chip-row { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+.platform-chip {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: var(--space-1); border-radius: var(--r4);
+  padding: var(--space-1-5) var(--space-3);
+  background: var(--chip-bg);
+  border: 1.5px solid var(--border-subtle);
+  cursor: pointer; font-family: var(--jio-font);
+  font-size: 11px; font-weight: 700; color: var(--text2);
+  letter-spacing: .3px;
+  transition: border-color var(--dur-fast);
+  min-width: var(--space-8);  /* 64px — chip min display width */
+}
+.platform-chip.selected {
+  background: #051a0e; border-color: var(--jio);
+  box-shadow: 0 0 0 1px var(--jio); color: var(--jio);
+}
+.action-chip {
+  height: var(--ctrl-h-sm); border-radius: var(--pill);
+  padding: 0 var(--space-2);
+  background: var(--glass-1); border: 1px solid var(--border-subtle);
+  font-family: var(--jio-font); font-size: 13px; font-weight: 500;
+  color: var(--text2); cursor: pointer;
+}
+.action-chip.selected {
+  background: var(--jio-soft); border-color: var(--jio); color: var(--jio);
+}
+
+/* ── Wide card ──────────────────────────────────── */
+.wide-card {
+  flex-shrink: 0; width: var(--card-wide-w);
+  border-radius: var(--r4); overflow: hidden;
+  background: var(--card-bg); position: relative;
+}
+.wide-card-art {
+  width: 100%; aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3); font-size: 12px;
+}
+.wide-card-label {
+  padding: var(--space-3) var(--space-1-5) var(--space-1-5);
+}
+.wide-card-name { font-size: 14px; font-weight: 900; color: var(--text); letter-spacing: -.3px; }
+.wide-card-meta { font-size: 11px; font-weight: 500; color: var(--text3); margin-top: 4px; }
+
+/* ── Square card ────────────────────────────────── */
+.sq-card { display: flex; flex-direction: column; gap: var(--space-1); }
+.sq-card-img {
+  width: var(--card-sq); height: var(--card-sq);
+  border-radius: var(--r4); overflow: hidden;
+  background: linear-gradient(135deg, #1a2a1f 0%, #0d1a10 100%);
+}
+.sq-card-name { font-size: 12px; font-weight: 700; color: var(--text); }
+.sq-card-genre { font-size: 11px; font-weight: 500; color: var(--text3); }
+
+/* ── Genre tile ─────────────────────────────────── */
+.genre-tile {
+  position: relative; border-radius: var(--r5);
+  overflow: hidden; height: var(--genre-tile-h);
+  cursor: pointer; border: 2px solid transparent;
+  background: linear-gradient(135deg, #1f2a1a 0%, #0f1a12 100%);
+  transition: border-color .22s, box-shadow .22s;
+  display: flex; align-items: flex-end;
+}
+.genre-tile.selected {
+  border-color: var(--jio);
+  box-shadow: 0 0 0 2px var(--jio), 0 6px 28px rgba(0,168,89,.45);
+}
+.genre-tile-label {
+  padding: var(--space-1-5) var(--space-1-5);
+  font-size: 13px; font-weight: 900; color: var(--text);
+  letter-spacing: -.2px; text-shadow: 0 1px 4px rgba(0,0,0,.8);
+}
+
+/* ── Pass card ──────────────────────────────────── */
+.pass-card {
+  border-radius: var(--r7); padding: var(--card-padding);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: var(--space-1-5);
+}
+.pass-mobile {
+  background: #0e1a14; border: 1px solid rgba(0,168,89,.25);
+}
+.pass-ultimate {
+  background: linear-gradient(135deg, #0a1f14 0%, #0d2a1a 60%, #08160e 100%);
+  border: 1px solid var(--border-ultimate);
+}
+.pass-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  color: var(--jio); display: inline-block;
+}
+.pass-name { font-size: 22px; font-weight: 900; letter-spacing: -.5px; color: var(--text); }
+.pass-price {
+  font-size: 28px; font-weight: 900; letter-spacing: -1px; color: var(--text);
+  display: flex; align-items: baseline; gap: 4px;
+}
+.pass-price-period { font-size: 14px; font-weight: 500; color: var(--text3); }
+.pass-perks { display: flex; flex-direction: column; gap: var(--space-1); }
+.pass-perk { font-size: 13px; font-weight: 500; color: var(--text2); display: flex; gap: var(--space-1); align-items: flex-start; }
+.pass-perk-dot { color: var(--jio); flex-shrink: 0; }
+
+/* ── Toast ──────────────────────────────────────── */
+.toast {
+  display: inline-flex; align-items: center; gap: var(--space-1-5);
+  background: var(--card-bg); border-radius: var(--r3);
+  padding: var(--space-1-5) var(--component-padding);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--jio-font); font-size: 14px; font-weight: 500;
+  color: var(--text);
+}
+.toast-icon { color: var(--jio); font-size: 16px; }
+
+/* ── Input ──────────────────────────────────────── */
+.input-field {
+  background: var(--glass-1); border: 1.5px solid var(--border);
+  border-radius: var(--r5); overflow: hidden;
+  padding: var(--component-padding);
+  font-family: var(--jio-font); font-size: 18px; font-weight: 500;
+  color: var(--text); letter-spacing: .9px; width: 100%;
+}
+.input-field.focused { border-color: var(--jio); box-shadow: 0 0 0 3px rgba(0,168,89,.14); }
+
+/* ── Eyebrow ────────────────────────────────────── */
+.eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--jio);
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="button">
+  <p class="section-label">Button</p>
+  <div class="col">
+    <button class="btn-primary">Play Now</button>
+    <button class="btn-primary" disabled>Play Now (disabled)</button>
+    <button class="btn-secondary">Explore Games</button>
+    <button class="btn-primary btn-ultimate">Upgrade to Ultimate</button>
+    <div class="row">
+      <button class="btn-cta-sm">Subscribe</button>
+      <button class="btn-ghost">Skip for now</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="otp">
+  <p class="section-label">OTP</p>
+  <div class="col" style="gap: var(--space-2)">
+    <div class="otp-row">
+      <div class="otp-box filled">4</div>
+      <div class="otp-box filled">2</div>
+      <div class="otp-box active"></div>
+      <div class="otp-box"></div>
+      <div class="otp-box"></div>
+      <div class="otp-box"></div>
+    </div>
+    <div class="otp-row">
+      <div class="otp-box"></div>
+      <div class="otp-box"></div>
+      <div class="otp-box"></div>
+      <div class="otp-box"></div>
+      <div class="otp-box"></div>
+      <div class="otp-box"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="input">
+  <p class="section-label">Text Input</p>
+  <div class="col">
+    <input class="input-field" placeholder="+91 Mobile number" value="">
+    <input class="input-field focused" placeholder="+91 Mobile number" value="98765">
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="chip">
+  <p class="section-label">Chips</p>
+  <div class="col">
+    <div class="chip-row">
+      <div class="platform-chip selected">Mobile</div>
+      <div class="platform-chip">PC</div>
+      <div class="platform-chip">Console</div>
+      <div class="platform-chip">TV</div>
+    </div>
+    <div class="chip-row">
+      <button class="action-chip selected">Action</button>
+      <button class="action-chip">Adventure</button>
+      <button class="action-chip">Racing</button>
+      <button class="action-chip">Sports</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="card-wide">
+  <p class="section-label">Wide Card (16:9)</p>
+  <div class="wide-card">
+    <div class="wide-card-art">Game Art 16:9</div>
+    <div class="wide-card-label">
+      <div class="wide-card-name">Tomb Raider</div>
+      <div class="wide-card-meta">Action Adventure · ★ 4.9</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="card-square">
+  <p class="section-label">Square Cards (1:1)</p>
+  <div class="row">
+    <div class="sq-card">
+      <div class="sq-card-img"></div>
+      <div class="sq-card-name">War Thunder</div>
+      <div class="sq-card-genre">Action</div>
+    </div>
+    <div class="sq-card">
+      <div class="sq-card-img" style="background:linear-gradient(135deg,#1a1030,#0d0820)"></div>
+      <div class="sq-card-name">Yooka-Laylee</div>
+      <div class="sq-card-genre">Platformer</div>
+    </div>
+    <div class="sq-card">
+      <div class="sq-card-img" style="background:linear-gradient(135deg,#1a2520,#0d1510)"></div>
+      <div class="sq-card-name">Last Light</div>
+      <div class="sq-card-genre">Survival</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="genre-tile">
+  <p class="section-label">Genre Tile</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--card-gap)">
+    <div class="genre-tile">
+      <div class="genre-tile-label">Action</div>
+    </div>
+    <div class="genre-tile selected">
+      <div class="genre-tile-label">Adventure</div>
+    </div>
+    <div class="genre-tile">
+      <div class="genre-tile-label">Racing</div>
+    </div>
+    <div class="genre-tile">
+      <div class="genre-tile-label">Sports</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="pass-card">
+  <p class="section-label">Pass Cards</p>
+  <div class="col">
+    <div class="pass-card pass-mobile">
+      <span class="pass-tag">Mobile Pass</span>
+      <div class="pass-name">JioGames Mobile</div>
+      <div class="pass-price">₹99 <span class="pass-price-period">/ month</span></div>
+      <div class="pass-perks">
+        <div class="pass-perk"><span class="pass-perk-dot">✓</span> Unlimited cloud gaming</div>
+        <div class="pass-perk"><span class="pass-perk-dot">✓</span> 500+ premium games</div>
+        <div class="pass-perk"><span class="pass-perk-dot">✓</span> Mobile &amp; tablet</div>
+      </div>
+    </div>
+    <div class="pass-card pass-ultimate">
+      <span class="pass-tag" style="color:var(--ultimate)">Ultimate Pass</span>
+      <div class="pass-name">JioGames Ultimate</div>
+      <div class="pass-price" style="color:var(--ultimate)">₹199 <span class="pass-price-period" style="color:var(--text3)">/ month</span></div>
+      <div class="pass-perks">
+        <div class="pass-perk"><span class="pass-perk-dot" style="color:var(--ultimate)">✓</span> Everything in Mobile</div>
+        <div class="pass-perk"><span class="pass-perk-dot" style="color:var(--ultimate)">✓</span> PC &amp; console streaming</div>
+        <div class="pass-perk"><span class="pass-perk-dot" style="color:var(--ultimate)">✓</span> 4K · all screens</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="eyebrow">
+  <p class="section-label">Eyebrow &amp; Typography</p>
+  <div class="col">
+    <span class="eyebrow">Action Adventure</span>
+    <div style="font-size:32px;font-weight:900;letter-spacing:-1px;color:var(--text)">Tomb Raider</div>
+    <div style="font-size:16px;font-weight:500;color:var(--text2);line-height:1.5">Play across 500+ premium games with zero downloads. Your library, everywhere.</div>
+    <div style="font-size:13px;font-weight:500;color:var(--text3)">★ 4.9 · 72% completed · Action Adventure</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="toast">
+  <p class="section-label">Toast</p>
+  <div class="toast">
+    <span class="toast-icon">✓</span>
+    Preferences saved
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<section data-component="colour-palette">
+  <p class="section-label">Colour Palette</p>
+  <div class="row" style="flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:var(--r2);background:var(--jio)"></div>
+      <span style="font-size:9px;color:var(--text3)">--jio</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:var(--r2);background:var(--ultimate)"></div>
+      <span style="font-size:9px;color:var(--text3)">--ultimate</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:var(--r2);background:var(--mint)"></div>
+      <span style="font-size:9px;color:var(--text3)">--mint</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:var(--r2);background:var(--popular-gold)"></div>
+      <span style="font-size:9px;color:var(--text3)">--popular-gold</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:var(--r2);background:var(--negative)"></div>
+      <span style="font-size:9px;color:var(--text3)">--negative</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:var(--r2);background:var(--bg);border:1px solid var(--border)"></div>
+      <span style="font-size:9px;color:var(--text3)">--bg</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:var(--r2);background:var(--card-bg)"></div>
+      <span style="font-size:9px;color:var(--text3)">--card-bg</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

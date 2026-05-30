@@ -1,0 +1,54 @@
+name: JioGames DLS CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  dls-check:
+    name: Token pipeline + Drift validator + Visual regression
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r tools/requirements.txt
+
+      - name: Install Playwright browser
+        run: playwright install chromium --with-deps
+
+      - name: Check tokens.css is up to date
+        run: python3 tokens/build.py --check
+
+      - name: Run drift validator
+        run: |
+          chmod +x tokens/validate.sh
+          bash tokens/validate.sh .
+
+      - name: Run visual regression
+        run: python3 tools/visual-test.py
+
+      - name: Upload diff images on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diffs
+          path: tests/diff/
+          retention-days: 7
+
+      - name: Upload visual report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-report
+          path: tests/report.json
+          retention-days: 7

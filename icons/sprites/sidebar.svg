@@ -1,0 +1,6 @@
+<!-- JioGames DLS — sidebar icons (1 icons) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic_sidebar" viewBox="0 0 24 24">
+    <path d="M18 3H6C4.34 3 3 4.34 3 6V18C3 19.66 4.34 21 6 21H18C19.66 21 21 19.66 21 18V6C21 4.34 19.66 3 18 3ZM8 17C8 17.55 7.55 18 7 18C6.45 18 6 17.55 6 17V7C6 6.45 6.45 6 7 6C7.55 6 8 6.45 8 7V17Z" fill="currentColor"/>
+  </symbol>
+</svg>

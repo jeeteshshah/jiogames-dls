@@ -1,0 +1,6 @@
+<!-- JioGames DLS — presentations icons (1 icons) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic_presentations" viewBox="0 0 24 24">
+    <path d="M20 15C20 16.1 19.1 17 18 17H13V18.38C13.31 18.65 13.5 19.05 13.5 19.5C13.5 20.33 12.83 21 12 21C11.17 21 10.5 20.33 10.5 19.5C10.5 19.05 10.69 18.66 11 18.38V17H6C4.9 17 4 16.1 4 15V7H20V15ZM20 3C20.55 3 21 3.45 21 4C21 4.55 20.55 5 20 5H4C3.45 5 3 4.55 3 4C3 3.45 3.45 3 4 3H20Z" fill="currentColor"/>
+  </symbol>
+</svg>

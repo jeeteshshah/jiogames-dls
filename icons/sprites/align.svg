@@ -1,0 +1,21 @@
+<!-- JioGames DLS — align icons (6 icons) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic_align_bottom" viewBox="0 0 24 24">
+    <path d="M20 19H4C3.45 19 3 19.45 3 20C3 20.55 3.45 21 4 21H20C20.55 21 21 20.55 21 20C21 19.45 20.55 19 20 19ZM10 17H14C15.66 17 17 15.66 17 14V6C17 4.34 15.66 3 14 3H10C8.34 3 7 4.34 7 6V14C7 15.66 8.34 17 10 17Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="ic_align_horizontal_centers" viewBox="0 0 24 24">
+    <path d="M17 7H13V3C13 2.45 12.55 2 12 2C11.45 2 11 2.45 11 3V7H7C5.34 7 4 8.34 4 10V14C4 15.66 5.34 17 7 17H11V21C11 21.55 11.45 22 12 22C12.55 22 13 21.55 13 21V17H17C18.66 17 20 15.66 20 14V10C20 8.34 18.66 7 17 7Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="ic_align_left" viewBox="0 0 24 24">
+    <path d="M4 3C3.45 3 3 3.45 3 4V20C3 20.55 3.45 21 4 21C4.55 21 5 20.55 5 20V4C5 3.45 4.55 3 4 3ZM18 7H10C8.34 7 7 8.34 7 10V14C7 15.66 8.34 17 10 17H18C19.66 17 21 15.66 21 14V10C21 8.34 19.66 7 18 7Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="ic_align_right" viewBox="0 0 24 24">
+    <path d="M20 3C19.45 3 19 3.45 19 4V20C19 20.55 19.45 21 20 21C20.55 21 21 20.55 21 20V4C21 3.45 20.55 3 20 3ZM14 7H6C4.34 7 3 8.34 3 10V14C3 15.66 4.34 17 6 17H14C15.66 17 17 15.66 17 14V10C17 8.34 15.66 7 14 7Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="ic_align_top" viewBox="0 0 24 24">
+    <path d="M20 3H4C3.45 3 3 3.45 3 4C3 4.55 3.45 5 4 5H20C20.55 5 21 4.55 21 4C21 3.45 20.55 3 20 3ZM14 7H10C8.34 7 7 8.34 7 10V18C7 19.66 8.34 21 10 21H14C15.66 21 17 19.66 17 18V10C17 8.34 15.66 7 14 7Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="ic_align_vertical_centers" viewBox="0 0 24 24">
+    <path d="M21 11H17V7C17 5.34 15.66 4 14 4H10C8.34 4 7 5.34 7 7V11H3C2.45 11 2 11.45 2 12C2 12.55 2.45 13 3 13H7V17C7 18.66 8.34 20 10 20H14C15.66 20 17 18.66 17 17V13H21C21.55 13 22 12.55 22 12C22 11.45 21.55 11 21 11Z" fill="currentColor"/>
+  </symbol>
+</svg>

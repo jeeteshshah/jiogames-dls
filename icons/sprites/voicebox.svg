@@ -1,0 +1,9 @@
+<!-- JioGames DLS — voicebox icons (1 icons) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic_voicebox" viewBox="0 0 24 24">
+    <path d="M14 8H7C5.89543 8 5 8.89543 5 10V19C5 20.1046 5.89543 21 7 21H14C15.1046 21 16 20.1046 16 19V10C16 8.89543 15.1046 8 14 8Z" fill="currentColor"/>
+<path d="M13 7C13.55 7 14 6.55 14 6V4C14 3.45 13.55 3 13 3C12.45 3 12 3.45 12 4V6C12 6.55 12.45 7 13 7Z" fill="currentColor"/>
+<path d="M18 7.41L19.41 6C19.8 5.61 19.8 4.98 19.41 4.59C19.02 4.2 18.39 4.2 18 4.59L16.59 6C16.2 6.39 16.2 7.02 16.59 7.41C16.79 7.61 17.04 7.7 17.3 7.7C17.56 7.7 17.81 7.6 18.01 7.41H18Z" fill="currentColor"/>
+<path d="M20 10H18C17.45 10 17 10.45 17 11C17 11.55 17.45 12 18 12H20C20.55 12 21 11.55 21 11C21 10.45 20.55 10 20 10Z" fill="currentColor"/>
+  </symbol>
+</svg>

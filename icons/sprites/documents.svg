@@ -1,0 +1,6 @@
+<!-- JioGames DLS — documents icons (1 icons) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic_documents" viewBox="0 0 24 24">
+    <path d="M17 3H7C5.9 3 5 3.9 5 5V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V5C19 3.9 18.1 3 17 3ZM16 18H8C7.45 18 7 17.55 7 17C7 16.45 7.45 16 8 16H16C16.55 16 17 16.45 17 17C17 17.55 16.55 18 16 18ZM16 13H8C7.45 13 7 12.55 7 12C7 11.45 7.45 11 8 11H16C16.55 11 17 11.45 17 12C17 12.55 16.55 13 16 13ZM16 8H8C7.45 8 7 7.55 7 7C7 6.45 7.45 6 8 6H16C16.55 6 17 6.45 17 7C17 7.55 16.55 8 16 8Z" fill="currentColor"/>
+  </symbol>
+</svg>

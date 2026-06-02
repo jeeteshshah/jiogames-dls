@@ -69,6 +69,8 @@ When creating JioGames UI, always produce these four files:
 | `README.md` | Platform classification, components used, design decisions, assumptions |
 | `qa-report.md` | Validation output — ERRORs, WARNs, and resolution status |
 
+**Version history** is saved automatically to `./versions/<screen-name>/` in your project (not the skill folder). Use `tools/version.sh` — see Version History section below.
+
 **Generated UI must:**
 - Import `tokens/tokens.css` via `<link>`
 - Use `var(--token)` exclusively in `styles.css` — no raw hex, no raw px except approved exceptions listed in `references/tokens-and-components.md` (Approved Structural Exceptions)
@@ -90,6 +92,46 @@ After creating or editing UI — **before presenting as complete**:
 4. Re-run validation — confirm no ERRORs. WARNs do not fail the script; document each remaining WARN in `qa-report.md` with justification.
 5. Write `qa-report.md` with: validation output, resolved ERRORs, remaining WARNs with justification, manual checks needed
 6. Present work only after validation passes
+7. **Auto-save version** — run `bash <skill-path>/tools/version.sh save <screen-name> "<what changed>"` after validation passes. First save = `v1`, each iteration = `v1.1`, `v1.2` etc.
+
+---
+
+## Version History
+
+Every generated screen is auto-versioned. Versions live in `./versions/` inside **your project** — not the skill folder. Each team member's history stays in their own project.
+
+### Version scheme
+```
+v1       ← first generation (auto)
+v1.1     ← first iteration
+v1.2     ← second iteration
+v2       ← major new direction (manual bump)
+v2.1     ← iteration on v2
+```
+
+### Commands
+```bash
+# Auto-save after generation (Claude runs this automatically)
+bash <skill>/tools/version.sh save home-screen "initial hero layout"
+
+# List all saved versions
+bash <skill>/tools/version.sh list home-screen
+
+# Restore a version (non-destructive — saves current state first)
+bash <skill>/tools/version.sh restore home-screen v1.2
+
+# Compare two versions
+bash <skill>/tools/version.sh diff home-screen v1 v1.2
+
+# Queue a major version bump (next save becomes v2)
+bash <skill>/tools/version.sh major home-screen
+
+# Show current version info
+bash <skill>/tools/version.sh status home-screen
+```
+
+### Restore is non-destructive
+Restoring `v1` does not delete `v1.1` or `v1.2`. Full history is always preserved. Next save after a restore continues from the latest version number — so rolling back to `v1` and saving creates `v1.3`, not `v1.1` again.
 
 ---
 

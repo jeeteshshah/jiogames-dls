@@ -76,7 +76,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Button
 
-**Owner:** [unassigned — assign before first production release]
+**Owner:** Jeetesh Shah
 **Anatomy:** container + label (+ optional leading icon).
 **Tokens:** `--jio` (primary bg) · `--text-inv` (label) · `--component-padding` (h-pad) · `--space-1` (icon gap) · `--spring` · `--dur-fast` · type token `text.cta`.
 **Radius:** `--pill` — all button variants. Never rectangular.
@@ -100,7 +100,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Card
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 **Anatomy:** container + (media) + content stack.
 **Tokens:** `--card-bg` · `--card-padding` · `--border-subtle` · `--jio-glow` (selected) · content via stack utilities.
 **Radius:** `--r4` (landscape/square game card) · `--r7` (pass card, editorial feature) · `--r2` (marquee hero card). Choose by card type — see radius-governance.md §2.
@@ -117,7 +117,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Text Input
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Tokens:** `--glass-1` bg · `--border` → `--jio` (focus) · `--component-padding` · `--text` (value) · `--text3` (placeholder) · focus glow.
 **Radius:** `--r5` — all text input variants.
@@ -132,7 +132,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## OTP
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Anatomy:** row of N boxes + hidden input.
 **Tokens:** `--glass-1` · `--border`→`--jio` · `--jio-soft` (filled bg) · `--spring-bounce` · type 26px/700.
@@ -148,7 +148,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Chip
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Tokens:** `--chip-bg` · `--border-subtle`→`--jio` · `--space-1`/`--space-3` padding · `text.badge`.
 **Radius:** `--pill` (inline action chip) · `--r4` (platform/filter tile chip). Tile format uses `--r4` — pill would look over-rounded at that height.
@@ -163,7 +163,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Bottom Sheet
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Tokens:** `--sheet-top`→`--sheet-bg` (gradient) · `--sheet-padding` · `--overlay-scrim` + blur · `--spring` · `--dur-sheet`.
 **Radius:** `--r9 --r9 0 0` — top corners only. Bottom is flush to screen edge.
@@ -177,7 +177,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Rail
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Tokens:** `--card-gap` (between cards) · `--gutter` (leading + last-child trailing) · `--section-gap` (below) · `text.railTitle` (head).
 **Radius:** n/a — the rail container has no radius. Radius belongs to the child card components it contains.
@@ -187,7 +187,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Pass Card (Mobile / Ultimate)
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Tokens:** Mobile = `#0e1a14` bg + `--border` green; Ultimate = green gradient + `--border-ultimate` + `--ultimate` CTA (**never blue**) · `--card-padding` · `text.cardTitle` (name) · `text.price` · `text.body` (perks) · `text.badge` (tag/popular).
 **Radius:** `--r7` — both Mobile and Ultimate tiers. Same radius, different backgrounds.
@@ -199,7 +199,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Genre Tile
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Tokens:** image bg · `2px transparent`→`--jio` border · `--jio-glow` (selected) · `--spring`.
 **Radius:** `--r5` — all genre/category tiles.
@@ -213,7 +213,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Tab Bar
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Anatomy:** container pill + N tab items (icon + label).
 **Tokens:** `--card-bg` (container bg) · `--border-subtle` (container border) · `--jio` (active icon/label) · `--text3` (inactive) · `text.caption` (label) · `--dur-fast` · `--spring`.
@@ -230,7 +230,7 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 ## Toast / Snackbar
 
-**Owner:** [unassigned]
+**Owner:** Jeetesh Shah
 
 **Tokens:** `--card-bg` · `--text` · `--component-padding` · `--dur-default`.
 **Radius:** `--r3` — compact transient surface.

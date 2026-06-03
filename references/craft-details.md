@@ -29,7 +29,7 @@ Real black shadows ARE used, but **only** to lift a physical object off the canv
 - Never use a soft grey `0 4px 8px rgba(0,0,0,.1)` shadow — that's SaaS/light-mode thinking
 - State changes (active/selected/focus) use **coloured glow**, not shadow
 - Physical lift uses **deep directional black shadow** with negative spread
-- Combine both on focused cards: `0 20px 48px rgba(0,0,0,.75), 0 0 32px var(--glow)`
+- Combine both on focused cards: `0 20px 48px rgba(0,0,0,.75), 0 0 32px var(--jio-glow)` (use `var(--ultimate-glow)` for Ultimate Pass surfaces)
 
 ### Glow Cheat Sheet
 

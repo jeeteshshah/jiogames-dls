@@ -153,12 +153,13 @@ padding-bottom: calc(var(--safe-bot) + var(--tab-bar-h) + var(--space-3));
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: var(--space-0-5);                     /* 4px icon↔label gap */
-  color: var(--text3);
+  color: var(--icon-color-default);
   transition: color var(--dur-fast);
 }
-.tabbar .tab svg { width: 20px; height: 20px; stroke-width: 1.8; }
+/* Solid glyph icons — fill only, no stroke rules */
+.tabbar .tab svg { width: var(--icon-size-md); height: var(--icon-size-md); }
 .tabbar .tab span { font-size: 10px; font-weight: 700; }
-.tabbar .tab.active { color: var(--jio); }
+.tabbar .tab.active { color: var(--icon-color-active); }
 ```
 
 ### Sub-page tab bar variant

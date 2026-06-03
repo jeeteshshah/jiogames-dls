@@ -1,10 +1,12 @@
 # JioGames Component Patterns & Token Index
 
-> This document is **not** the source of truth for typography or spacing.
-> - Typography is governed by [typography.md](typography.md)
-> - Spacing, grids, rails, and vertical rhythm are governed by [spacing-and-grid.md](spacing-and-grid.md)
-> - All token values live in [../tokens/tokens.json](../tokens/tokens.json) and are generated into [../tokens/tokens.css](../tokens/tokens.css)
+> This document is **not** the source of truth for typography, spacing, colour, radius, sizing, or motion.
+> - Typography: [typography.md](typography.md) · Spacing: [spacing-and-grid.md](spacing-and-grid.md)
+> - Colour: [colour-governance.md](colour-governance.md) · Radius: [radius-governance.md](radius-governance.md)
+> - Sizing: [sizing-scale.md](sizing-scale.md) · Motion: [motion.md](motion.md)
+> - Token values: [../tokens/tokens.json](../tokens/tokens.json) → generated into [../tokens/tokens.css](../tokens/tokens.css)
 >
+> **Literal values in this document are explanatory only.** Generated CSS must always use `var(--token)` names.
 > This document shows how approved tokens combine into reusable JioGames components.
 
 ---
@@ -46,7 +48,7 @@ For the full `:root` block and `@media` overrides see `tokens/tokens.css` direct
 
 ## 2. Colour Tokens
 
-> **Quick reference only.** Full index — including `--mint`, `--jio-3`, `--amber`, `--pink`, `--positive`, `--hairline-2`, `--overlay-scrim`, surface ladder, and glass surfaces — lives in [colour-governance.md §3](colour-governance.md). Colour decisions, decision tree, and forbidden combos: [colour-governance.md §4–§10](colour-governance.md).
+> **Quick reference only — explanatory, not copyable.** Literal values below are for human readability. Generated CSS must use `var(--token)` names, never raw hex. Full index lives in [colour-governance.md §3](colour-governance.md). Colour decisions, decision tree, forbidden combos: [colour-governance.md §4–§10](colour-governance.md).
 
 ### Most-used tokens
 

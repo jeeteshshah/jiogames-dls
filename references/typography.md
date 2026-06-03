@@ -146,6 +146,11 @@ Three permanent levels — never confuse them:
 .text-cta         { font-family: var(--jio-font); font-size: 16px; font-weight: 700; line-height: 1;    letter-spacing: .04em;  color: var(--text-inv); }
 /* --text-inv (#000) on var(--jio) — never raw #000 in component CSS */
 
+/* ── Strong variants (`.text-caption-strong` / `.text-body-strong` in pattern tables) ── */
+/* Use these instead of ad hoc font-weight overrides */
+.text-caption-strong { font-family: var(--jio-font); font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0; color: var(--text2); }
+.text-body-strong    { font-family: var(--jio-font); font-size: 14px; font-weight: 700; line-height: 1.55; letter-spacing: 0; color: var(--text); }
+
 /* ── Web overrides (base 20px) ── */
 @media (min-width: 768px) {
   .text-hero{font-size:64px;letter-spacing:-1.5px;line-height:1.05;} .text-screen-title{font-size:48px;letter-spacing:-1px;}
@@ -200,7 +205,7 @@ Landing, subscriptions, profile overview, store, tournament, campaign.
 | Main headline | `hero` *or* `screenTitle` |
 | Supporting text | `body` |
 | Primary action | `cta` |
-| Secondary action | caption-bold *or* secondary `cta` |
+| Secondary action | `.text-caption-strong` *or* secondary `cta` |
 | Status / category | `badge` |
 | Price / key number | `price` |
 
@@ -224,7 +229,7 @@ Home rails, game lists, benefits, recommendations, recently played, watch conten
 | Card title | `cardTitle` |
 | Card meta | `caption` |
 | Badge | `badge` |
-| See all | caption-bold |
+| See all | `.text-caption-strong` |
 
 ### 6.4 Card
 Game, plan, stat, wallet, tournament, offer, voucher cards.
@@ -235,18 +240,18 @@ Game, plan, stat, wallet, tournament, offer, voucher cards.
 | Card meta | `caption` |
 | Primary number | `price` |
 | Badge / label | `badge` |
-| CTA inside card | `cta` *or* caption-bold |
+| CTA inside card | `cta` *or* `.text-caption-strong` |
 
 ### 6.5 Form & Input
 Login, OTP, profile edit, search, redeem, payment, settings.
 | Element | Role |
 |---|---|
 | Form title | `sheetTitle` |
-| Field label | `badge` (compact) *or* caption-bold |
+| Field label | `badge` (compact) *or* `.text-caption-strong` |
 | Input value | input value |
 | Helper text | `caption` |
-| Error text | caption-bold, `--negative` |
-| Success text | caption-bold + icon |
+| Error text | `.text-caption-strong`, `--negative` |
+| Success text | `.text-caption-strong` + icon |
 | CTA | `cta` |
 
 ### 6.6 Pricing Block
@@ -272,7 +277,7 @@ Profile, edit profile, achievements, stats, account, linked accounts.
 | Stat number | `price` |
 | Stat label | `caption` |
 | Section title | `railTitle` |
-| Setting label | body-bold |
+| Setting label | `.text-body-strong` |
 | Setting description | `caption` |
 | Status label | `badge` |
 
@@ -283,7 +288,7 @@ Across all pages.
 | Title | `sheetTitle` |
 | Message | `body` |
 | Recovery CTA | `cta` |
-| Help link | caption-bold |
+| Help link | `.text-caption-strong` |
 | Status badge | `badge` |
 
 **Rule:** errors, payment issues, subscription expiry, gameplay blockers **never** use muted text.
@@ -291,10 +296,10 @@ Across all pages.
 ### 6.9 Navigation / Modal / Bottom Sheet / Detail / List
 | Element | Role |
 |---|---|
-| Active nav label | caption-bold *or* `badge` |
+| Active nav label | `.text-caption-strong` *or* `badge` |
 | Inactive nav label | `caption` |
 | Filter chip | `badge` (compact) |
-| Category tab | caption-bold |
+| Category tab | `.text-caption-strong` |
 | Notification count | tiny `badge` |
 | Modal / sheet title | `sheetTitle` |
 | Detail page title | `screenTitle` |
@@ -314,7 +319,7 @@ Across all pages.
 | Game card | `text.cardTitle`, `text.caption` |
 | Page header | `text.screenTitle`, `text.body` |
 | Rail header | `text.railTitle` |
-| Form field | field label (`badge`/caption-bold) + input value + `text.caption` helper |
+| Form field | field label (`badge`/`.text-caption-strong`) + input value + `text.caption` helper |
 | Pricing block | `text.cardTitle`, `text.price`, `text.body`, `text.badge` |
 
 A new screen assembles components; it does not re-apply type by hand. This makes the system followed **automatically**, not by discipline.
@@ -447,9 +452,9 @@ Level 3 — temporary worked examples. Each is tagged with the patterns it compo
 | Section heading | `railTitle` | 18px / 900; italic `em` |
 | Meta chip | `body` | 13px / 500, `--text2` |
 | Age pill | `badge` | 11px / 700, white, bordered |
-| Play button | `cta` | 16px / 700, `#000` on green |
+| Play button | `cta` | 16px / 700, `var(--text-inv)` on `var(--jio)` |
 | Description | `body` | 14px / 500, `--text2` (3-line clamp) |
-| Detail value | caption-bold | 13px / 700, `--text` |
+| Detail value | `.text-caption-strong` | 13px / 700, `--text` |
 
 ### Pass Upsell → *Pricing Block*
 | Element | Role | Spec |
@@ -458,7 +463,7 @@ Level 3 — temporary worked examples. Each is tagged with the patterns it compo
 | Plan label | `badge` | 11px / 700 uppercase, `var(--jio)` |
 | Pass card name | `cardTitle` | 22px / 900, `--text` |
 | Plan price | `price` | 22–24px / 900, tabular-nums |
-| Perk text | `body` | 13–14px / 500, `rgba(244,242,238,.85)` |
+| Perk text | `body` | 13–14px / 500, `var(--text2)` (use `--text` for primary perk) |
 | "Most Popular" | `badge` (gold) | 9px / 900 uppercase, `#000` on gold |
 
 ---

@@ -65,10 +65,34 @@ Rule: choose based on background lightness. Dark bg → White. Light bg → Blac
 
 ```css
 .app-logo {
-  width: 120px;        /* set display size in CSS */
-  height: auto;        /* preserve aspect ratio — never distort */
+  width: var(--logo-width-default);   /* see Approved Logo Sizes below */
+  height: auto;                        /* preserve aspect ratio — never distort */
 }
 ```
+
+### Approved logo display sizes
+
+Logo dimensions are brand asset constants — not spacing tokens. These approved widths correspond to platform minimum sizes and common usage contexts.
+
+| CSS variable | Value | Context |
+|---|---:|---|
+| `--logo-width-xs` | 80px | Mobile in-app minimum |
+| `--logo-width-default` | 100px | Web header default |
+| `--logo-width-lg` | 120px | Splash / login screen |
+| `--logo-width-tv` | 140px | TV safe-zone minimum |
+
+Add to your screen's CSS — these are not in `tokens.css` (logo sizes are brand asset constants, not layout tokens):
+
+```css
+:root {
+  --logo-width-xs:      80px;
+  --logo-width-default: 100px;
+  --logo-width-lg:      120px;
+  --logo-width-tv:      140px;
+}
+```
+
+Never use raw `px` widths for logos in component CSS — always reference these variables.
 
 ### Never override logo colours
 

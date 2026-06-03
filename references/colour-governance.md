@@ -264,7 +264,7 @@ Use exactly one emphasis level per piece of text. Never skip levels arbitrarily.
 |---|---|---|
 | Primary | `--text` | Headings, prices, input values, game names, OTP digits, critical warnings |
 | Secondary | `--text2` | Body copy, descriptions, plan summaries, perk lists |
-| Muted | `--text3` | Timestamps, hints, terms, tab labels (inactive), placeholder text |
+| Muted | `--text3` | Decorative metadata, inactive icons, timestamps, placeholders only |
 | Faint | `--text4` | Deep metadata, disabled states — very limited use |
 | Inverse | `--text-inv` | Text on primary green CTA button only |
 | Brand | `--jio` | Eyebrow labels, active state labels, links, amounts due in green |
@@ -272,7 +272,7 @@ Use exactly one emphasis level per piece of text. Never skip levels arbitrarily.
 ### Hard Rules
 
 - **Payment / subscription / error / OTP / gameplay-critical text: always `--text` (Primary).** Never `--text2` or below.
-- `--text3` (muted) for muted hints only. If text matters to a user decision, step up to `--text2` or `--text`.
+- **`--text3` rule:** decorative metadata, inactive icons, timestamps, and placeholders only. Terms, timers, helper text, nav labels, and anything users must read to complete a task use `--text2`.
 - Never use raw `#FFFFFF` or `#fff` for product text. Use `--text`.
 - Product body copy uses `--text2`. Critical text uses `--text`. Muted text uses `--text3` only for low-stakes information.
 - Links and inline interactive text: `--jio`, weight 700.

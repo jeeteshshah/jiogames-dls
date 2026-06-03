@@ -154,6 +154,7 @@ def build_css(t):
             ("--spring-bounce", g("motion","spring-bounce")),
             ("--ease-screen",   g("motion","ease-screen")),
             ("--ease-out",      g("motion","ease-out")),
+            ("--ease-error",    g("motion","ease-error")),
         ]),
         ("Motion — duration (use tokens; raw ms only inside approved keyframe recipes)", [
             ("--dur-instant", g("motion","dur-instant")),
@@ -162,8 +163,15 @@ def build_css(t):
             ("--dur-pop",     g("motion","dur-pop")),
             ("--dur-error",   g("motion","dur-error")),
             ("--dur-sheet",   g("motion","dur-sheet")),
-            ("--dur-enter",   g("motion","dur-enter")),
-            ("--dur-screen",  g("motion","dur-screen")),
+            ("--dur-enter",    g("motion","dur-enter")),
+            ("--dur-screen",   g("motion","dur-screen")),
+            ("--dur-tv-enter",     g("motion","dur-tv-enter")),
+            ("--dur-shimmer",      g("motion","dur-shimmer")),
+            ("--dur-icon-spin",    g("motion","dur-icon-spin")),
+            ("--dur-reduced-fade",    g("motion","dur-reduced-fade")),
+            ("--dur-reduced-instant", g("motion","dur-reduced-instant")),
+            ("--stagger-start",    g("motion","stagger-start")),
+            ("--stagger-step",     g("motion","stagger-step")),
         ]),
     ]
 
@@ -209,7 +217,7 @@ def build_css(t):
     # reduced motion — collapse all interaction durations; keep sheet at 100ms for perceived continuity
     out.append("@media (prefers-reduced-motion: reduce) {")
     out.append("  :root {")
-    out.append("    --dur-instant: 0ms; --dur-fast: 0ms; --dur-default: 0ms;")
+    out.append("    --dur-instant: 0ms; --dur-fast: 0ms; --dur-default: 0ms; --dur-tv-enter: 0ms;")
     out.append("    --dur-pop: 0ms; --dur-error: 0ms;")
     out.append("    --dur-enter: 0ms; --dur-screen: 0ms; --dur-sheet: 100ms;")
     out.append("  }")

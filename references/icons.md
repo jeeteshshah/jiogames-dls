@@ -49,8 +49,11 @@ python3 tools/export-all-icons.py --token YOUR_TOKEN    # full library (1,646 ic
      CSS cannot override it via color on the parent. -->
 ```
 
-<!-- Alternative: inline SVG -->
-<!-- Paste contents of icons/svg/ic_play_circle.svg -->
+```html
+<!-- Alternative: inline SVG — paste contents of icons/svg/ic_play_circle.svg -->
+<svg class="icon icon-size-base" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path fill="currentColor" d="..."/>
+</svg>
 ```
 
 ### Third-party icon library policy
@@ -690,7 +693,8 @@ The migration map below was generated from the current library. Rerun the script
 | Action icons paired with label or `aria-label` — not icon alone | Yes |
 | Decorative icons have `aria-hidden="true"` and `focusable="false"` | Yes |
 | Icon-only buttons have `aria-label` on `<button>` | Yes |
-| Status, error, loading icons paired with visible text | Yes |
+| Status and error icons paired with visible text — not icon alone | Yes |
+| Loading icons have either visible loading text or an accessible `role="status"` + `aria-label` | Yes |
 | Loading spinner has `prefers-reduced-motion` fallback | Yes |
 | New icon exists in `icons/svg/` before use in component | Yes |
 | New icon has entry in `icons/icons-manifest.json` | Yes |
@@ -698,4 +702,4 @@ The migration map below was generated from the current library. Rerun the script
 | Flagged filename uses manifest alias until formal rename | If using audited icon |
 | TV: no `backdrop-filter` on wrappers | If TV in scope |
 | TV: icon sizes use `var(--icon-size-xl)` or `var(--icon-size-lg)` | If TV in scope |
-| TV: focusable icon buttons have `tabindex="0"` and `aria-label` | If TV in scope |
+| TV: icon controls use real `<button>` or `<a>` where possible; non-semantic controls require `role`, `tabindex="0"`, and `aria-label` | If TV in scope |

@@ -155,6 +155,7 @@
   --spring-bounce: cubic-bezier(.34,1.56,.64,1);
   --ease-screen: cubic-bezier(.42,0,.18,1);
   --ease-out: cubic-bezier(0,0,.2,1);
+  --ease-error: cubic-bezier(.36,.07,.19,.97);
 
   /* Motion — duration (use tokens; raw ms only inside approved keyframe recipes) */
   --dur-instant: 90ms;
@@ -165,6 +166,13 @@
   --dur-sheet: 400ms;
   --dur-enter: 420ms;
   --dur-screen: 420ms;
+  --dur-tv-enter: 560ms;
+  --dur-shimmer: 1600ms;
+  --dur-icon-spin: 1000ms;
+  --dur-reduced-fade: 100ms;
+  --dur-reduced-instant: 1ms;
+  --stagger-start: 50ms;
+  --stagger-step: 60ms;
 }
 
 /* WEB overrides */
@@ -198,7 +206,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --dur-instant: 0ms; --dur-fast: 0ms; --dur-default: 0ms;
+    --dur-instant: 0ms; --dur-fast: 0ms; --dur-default: 0ms; --dur-tv-enter: 0ms;
     --dur-pop: 0ms; --dur-error: 0ms;
     --dur-enter: 0ms; --dur-screen: 0ms; --dur-sheet: 100ms;
   }

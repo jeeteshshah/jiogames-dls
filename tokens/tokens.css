@@ -135,6 +135,17 @@
   --genre-tile-h: 156px;
   --tab-bar-h: 64px;
   --app-bar-h: 64px;
+  --icon-size-xs: 14px;
+  --icon-size-sm: 16px;
+  --icon-size-md: 20px;
+  --icon-size-base: 24px;
+  --icon-size-lg: 32px;
+  --icon-size-xl: 40px;
+  --icon-color-default: rgba(255,255,255,.45);
+  --icon-color-active: #00A859;
+  --icon-color-muted: #6B7280;
+  --icon-wrapper-sm: 40px;
+  --icon-wrapper-md: 48px;
 
   /* Font */
   --jio-font: 'JioType', -apple-system, BlinkMacSystemFont, sans-serif;

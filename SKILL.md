@@ -182,6 +182,8 @@ TV has no hover and no bottom sheets. D-pad focus is the primary affordance. Mob
 | `references/governance.md` | Ownership, RFC process, semver, CHANGELOG, deprecation policy, release checklist |
 | `references/anti-ai-slop.md` | Quality check — patterns that break the JioGames look |
 | `references/craft-details.md` | Polish — focus states, TV nav, image handling, glow system |
+| `references/logos.md` | Logo governance — approved variants (White/Black), when to use each, clear space, minimum size, forbidden treatments |
+| `logos/` | Approved JioGames logo SVG files — use only these, never recreate or override colours |
 | `CHANGELOG.md` | Version history |
 | `examples/create-mobile-pass-screen.md` | Worked example: mobile subscription screen — token decisions, common mistakes, expected output |
 | `examples/redesign-game-detail-page.md` | Worked example: game detail page — anti-slop checks, cinematic patterns, element tokens |

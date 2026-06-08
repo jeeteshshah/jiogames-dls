@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ============================================================
 # JioGames DLS — drift validator (zero dependencies)
-# Greps CSS/HTML for violations of the design system.
+# Greps CSS/HTML for violations of the design system. 14 checks.
 # Usage:  ./validate.sh <file-or-dir> [<file-or-dir> ...]
 # Exit:   0 = clean, 1 = violations found
 # Excludes tokens.css (the one place literals are allowed).
@@ -77,6 +77,27 @@ report WARN "Off-scale spacing — use --space-* (8px scale: 4/8/12/16/24/32…)
 #         156=--genre-tile-h  272=--card-wide-w  400=TV --card-wide-w
 report ERR "Raw control-size literal in height/width — use var(--ctrl-h/--card-wide-w/--card-sq/etc.)" \
   "$(scan '(height|width|min-height|min-width)\s*:\s*(54|44|40|36|72|50|64|96|156|272|400)px')"
+
+# ── HTML Audit checks (checks 11–14) ─────────────────────────────────────────
+
+# 11. Stroke icons in CSS — DLS icon system is solid glyph only (ERROR)
+# stroke-width in a CSS rule/style block = stroke icon pattern
+report ERR "stroke-width in CSS — DLS icons are solid glyph (fill:currentColor). Remove stroke, use icons/sprite.svg" \
+  "$(scan 'stroke-width\s*:\s*[0-9]')"
+
+# 12. CSS fill:none on SVG — signals stroke icon; decorative SVGs exempt if aria-hidden (WARN)
+report WARN "CSS fill:none — likely stroke icon. DLS requires fill:currentColor on icon SVGs" \
+  "$(scan 'fill\s*:\s*none\b')"
+
+# 13. Non-DLS token aliases --s-N instead of --space-N (WARN)
+# --s-2=8px=--space-1  --s-3=12px=--space-1-5  --s-4=16px=--space-2
+report WARN "Non-DLS alias var(--s-N) — migrate to --space-1 / --space-1-5 / --space-2 etc." \
+  "$(scan 'var\(--s-[0-9]')"
+
+# 14. outline:none without a paired focus replacement (ERROR — a11y)
+# Flags bare outline removal; box-shadow glow must appear in same rule or component
+report ERR "outline:none — must pair with box-shadow glow focus ring (never remove focus without replacement)" \
+  "$(scan 'outline\s*:\s*0|outline\s*:\s*none')"
 
 echo "────────────────────────────────"
 if [ $fail -eq 0 ]; then

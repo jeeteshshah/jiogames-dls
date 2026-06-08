@@ -85,6 +85,35 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 - Logo: `height: 26px; width: auto` — never distort, `height: auto` forbidden here (fixed 26px is brand minimum)
 - Icon buttons: `width: var(--icon-wrapper-sm); height: var(--icon-wrapper-sm)` (40px) — **not** raw `38px`
 - Icon SVGs inside buttons: `var(--icon-size-xs)` (14px) — solid glyph, `fill: currentColor`, **no `stroke-width`**
+
+### Icon button — shared spec (all AppBar variants)
+
+The `.icon-btn` style is **identical** across `appbar--home` and `appbar--detail`. Do not create variant-specific icon button classes.
+
+```css
+.icon-btn {
+  width: var(--icon-wrapper-sm);   /* 40px */
+  height: var(--icon-wrapper-sm);
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--hairline);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-fast) var(--spring);
+}
+.icon-btn:active {
+  background: rgba(255,255,255,.08);
+  transform: scale(.95);           /* never .92 or .96 — .95 is the contracted value */
+}
+.icon-btn svg {
+  width: var(--icon-size-xs);      /* 14px */
+  height: var(--icon-size-xs);
+  fill: currentColor;              /* solid glyph — no stroke, no stroke-width */
+  color: var(--text);
+}
+```
+
+**Rule:** Any new AppBar surface reuses `.icon-btn` as-is. Changing bg opacity, scale, or icon style per-surface = drift violation.
 - Notification dot: `7×7px` hard-coded (brand badge size, not a layout token)
 
 | State | Spec |

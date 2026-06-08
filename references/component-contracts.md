@@ -122,6 +122,49 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 
 **Icon governance note:** Icons inside AppBar buttons must be solid glyphs from `icons/` library — `fill: currentColor`, no `stroke`, no `stroke-width`. The source design spec showing `stroke-width: 1.8` is **non-compliant** with the DLS icon system and must not be implemented.
 
+### AppBar — Detail variant (`appbar--detail`)
+
+Inner/detail pages (game detail, pass upsell, settings, search results) use a simplified bar with back navigation only.
+
+**Anatomy:** container + back-button + (optional page title) + (optional single action).
+**Tokens:** same token set as home variant. Title uses `--text` · type `text.body` weight 700.
+**Radius:** `--pill` — back button circular. Container no radius.
+**Sizing:**
+- Container: same full-width, same padding as home variant
+- Back button: `width: var(--icon-wrapper-sm); height: var(--icon-wrapper-sm)` (40px), `border-radius: 50%`
+- Back icon SVG: `var(--icon-size-xs)` (14px) — solid chevron-left glyph, `fill: currentColor`
+- Page title: optional, `font-size: 16px; font-weight: 700`, centred between back button and trailing action (or trailing edge if no action)
+
+| State | Spec |
+|---|---|
+| default | back button `rgba(255,255,255,.04)` bg + `1px solid var(--hairline)` |
+| back button active | bg → `rgba(255,255,255,.08)` + `transform: scale(.95)` |
+| title present | single line, truncated with ellipsis at 60% container width max |
+| title absent | back button left-aligned, rest of bar empty |
+
+**Scroll behaviour:** **fixed** — no hide-on-scroll. Back button must always be reachable. Add `.header-scrolled` background blur on scroll if content passes underneath.
+
+**No scroll JS required** unless adding the blur-on-scroll effect:
+```javascript
+scroller.addEventListener('scroll', function(){
+  bar.classList.toggle('header-scrolled', scroller.scrollTop > 20);
+}, {passive:true});
+```
+
+**Platform:**
+- Mobile/Web: back button taps `history.back()` or explicit route pop.
+- TV: **not used** — TV uses D-pad focus to navigate back; no visible back button.
+
+**A11y:** back button `<button aria-label="Back">`; if title present, it is a `<h1>` (detail page is a new context); trailing action needs `aria-label`.
+
+**When to use which variant:**
+
+| Surface | Variant |
+|---|---|
+| Home, Browse, Library, Profile (top-level) | `appbar--home` (logo + search + bell) |
+| Game detail, Pass upsell, Search results, Settings | `appbar--detail` (back + optional title) |
+| Full-screen immersive (cinematic intro, OTP) | No AppBar |
+
 ---
 
 ## Button

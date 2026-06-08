@@ -114,6 +114,11 @@ The `.icon-btn` style is **identical** across `appbar--home` and `appbar--detail
 ```
 
 **Rule:** Any new AppBar surface reuses `.icon-btn` as-is. Changing bg opacity, scale, or icon style per-surface = drift violation.
+
+**Forbidden in AppBar (all variants):**
+- Avatar / profile button — belongs in a dedicated profile surface, not the bar
+- Heart / wishlist / like button — page-level action, not a nav element
+- Any icon not search, bell, or back — requires governance approval before adding
 - Notification dot: `7×7px` hard-coded (brand badge size, not a layout token)
 
 | State | Spec |

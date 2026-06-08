@@ -10,7 +10,7 @@ This is the layer that stops screens from reinventing buttons and cards (the big
 2. The State Model
 3. The Platform Interaction Model
 4. Component Contracts
-   - Button · Card · Text Input · OTP · Chip · Bottom Sheet · Rail · Tab Bar · Pass Card · Genre Tile · Toast
+   - AppBar · Button · Card · Text Input · OTP · Chip · Bottom Sheet · Rail · Tab Bar · Pass Card · Genre Tile · Toast
 5. Accessibility Contract (all components)
 6. Release Gate
 
@@ -73,6 +73,56 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 ---
 
 # 4. Component Contracts
+
+## AppBar
+
+**Owner:** Jeetesh Shah
+**Anatomy:** container + logo + spacer + icon-button (search) + icon-button (bell + notification dot).
+**Tokens:** `--gutter` (side padding) · `--space-1` (top pad, 8px) · `--space-1-5` (icon gap, 12px) · `--space-2` (bottom pad, 16px) · `--hairline` (icon button border) · `--jio` (notification dot) · `--bg` (dot outline ring) · `--dur-fast` (state transitions) · `--spring` (press scale).
+**Radius:** `--pill` — icon buttons are circular (`border-radius: 50%`). Container has no radius (full-width bar).
+**Sizing:**
+- Container: full width, `height: 62px` visual (padding-driven — `--space-1` top + content + `--space-2` bottom)
+- Logo: `height: 26px; width: auto` — never distort, `height: auto` forbidden here (fixed 26px is brand minimum)
+- Icon buttons: `width: var(--icon-wrapper-sm); height: var(--icon-wrapper-sm)` (40px) — **not** raw `38px`
+- Icon SVGs inside buttons: `var(--icon-size-xs)` (14px) — solid glyph, `fill: currentColor`, **no `stroke-width`**
+- Notification dot: `7×7px` hard-coded (brand badge size, not a layout token)
+
+| State | Spec |
+|---|---|
+| default | logo white, icon buttons `rgba(255,255,255,.04)` bg + `1px solid var(--hairline)` |
+| icon-button active/pressed | bg → `rgba(255,255,255,.08)` + `transform: scale(.95)`, `--dur-fast` |
+| scrolled (`scrollTop > 80px`) | container bg → `rgba(0,0,0,.7)` (`.header-scrolled`) |
+| scroll-hidden (scrolling down) | `transform: translateY(-110%)` (`.header-hidden`), `transition: transform .3s ease` |
+| scroll-visible (scrolling up) | remove `.header-hidden`; dead-zone ±6px prevents jitter |
+
+**Notification dot:** `7×7px`, `background: var(--jio)`, `border-radius: 50%`, `position: absolute; top: 8px; right: 8px`, `box-shadow: 0 0 0 2px var(--bg)` (knockout ring). Toggle with `.has-notification` class on bell button.
+
+**Scroll JS contract:**
+```javascript
+(function(){
+  var sc = document.getElementById('scroller');
+  var bar = document.querySelector('.appbar');
+  var lastY = 0, threshold = 6;
+  sc.addEventListener('scroll', function(){
+    var y = sc.scrollTop;
+    bar.classList.toggle('header-scrolled', y > 80);
+    if(Math.abs(y - lastY) < threshold) return;
+    bar.classList[y > lastY ? 'add' : 'remove']('header-hidden');
+    lastY = y;
+  }, {passive:true});
+})();
+```
+
+**Platform:**
+- Mobile: primary surface. Scroll hide/show active.
+- Web: keep bar always visible (no hide-on-scroll); `--gutter` expands to 40px automatically via token.
+- TV: **not used** — TV uses sidebar navigation, not a top AppBar.
+
+**A11y:** `<header role="banner">`; logo `<img alt="JioGames">`; icon buttons are `<button>` with `aria-label="Search"` / `aria-label="Notifications"`; bell with dot adds `aria-label="Notifications, new"`. Focus ring on buttons uses `box-shadow: 0 0 0 3px rgba(0,168,89,.4)`.
+
+**Icon governance note:** Icons inside AppBar buttons must be solid glyphs from `icons/` library — `fill: currentColor`, no `stroke`, no `stroke-width`. The source design spec showing `stroke-width: 1.8` is **non-compliant** with the DLS icon system and must not be implemented.
+
+---
 
 ## Button
 

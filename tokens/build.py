@@ -134,6 +134,7 @@ def build_css(t):
             ("--genre-tile-h", g("control","genre-tile-h")),
             ("--tab-bar-h",    g("control","tab-bar-h")),
             ("--app-bar-h",    g("control","app-bar-h")),
+            ("--status-bar-h", g("control","status-bar-h")),
             ("--icon-size-xs",       g("control","icon-size-xs")),
             ("--icon-size-sm",       g("control","icon-size-sm")),
             ("--icon-size-md",       g("control","icon-size-md")),

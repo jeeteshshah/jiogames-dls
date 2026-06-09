@@ -77,22 +77,78 @@ Rule: TV has no hover. Any `:hover`-only affordance must also exist on `:focus`.
 ## AppBar
 
 **Owner:** Jeetesh Shah
-**Anatomy:** container + logo + spacer + icon-button (search) + icon-button (bell + notification dot).
-**Tokens:** `--gutter` (side padding) · `--space-1` (top pad, 8px) · `--space-1-5` (icon gap, 12px) · `--space-2` (bottom pad, 16px) · `--hairline` (icon button border) · `--jio` (notification dot) · `--bg` (dot outline ring) · `--dur-fast` (state transitions) · `--spring` (press scale).
-**Radius:** `--pill` — icon buttons are circular (`border-radius: 50%`). Container has no radius (full-width bar).
-**Sizing:**
-- Container: full width, `height: 62px` visual (padding-driven — `--space-1` top + content + `--space-2` bottom)
-- Logo: `height: 26px; width: auto` — never distort, `height: auto` forbidden here (fixed 26px is brand minimum)
-- Icon buttons: `width: var(--icon-wrapper-sm); height: var(--icon-wrapper-sm)` (40px) — **not** raw `38px`
-- Icon SVGs inside buttons: `var(--icon-size-xs)` (14px) — solid glyph, `fill: currentColor`, **no `stroke-width`**
+**Source file:** `jiogames-header.html`
 
-### Icon button — shared spec (all AppBar variants)
+### Variants
 
-The `.icon-btn` style is **identical** across `appbar--home` and `appbar--detail`. Do not create variant-specific icon button classes.
+| Variant | Class | Use case |
+|---|---|---|
+| Home — transparent | `.appbar` | Over hero image, page top |
+| Home — scrolled | `.appbar.header-scrolled` | After scroll past 80px |
+| Home — hidden | `.appbar.header-hidden` | Scrolling down past threshold |
+| Game detail | `.appbar.appbar--detail` | Over game hero, back button only, no title |
+| Inner page | `.appbar.appbar--inner` | Notifications, settings — solid bg + back + title |
+
+**When to use which variant:**
+
+| Surface | Variant |
+|---|---|
+| Home, Browse, Library (top-level) | `appbar` — logo + search + bell |
+| Game detail, Pass upsell | `appbar--detail` — back only, overlays hero |
+| Settings, Notifications, Search results | `appbar--inner` — back + title, solid bg |
+| OTP, cinematic intro | No AppBar |
+
+---
+
+### Anatomy
+
+**Home:**
+```
+[ JioGames logo ] [ PASS badge? ] ·····spacer····· [ Search ] [ Bell● ]
+```
+
+**Game detail (`appbar--detail`):**
+```
+[ ← Back ]
+```
+Container fully transparent — overlays hero image. Back button uses dark-glass modifier.
+
+**Inner page (`appbar--inner`):**
+```
+[ ← Back ]  [ Page title ]  ·····flex-1·····  [ ⋮ Kebab? ]
+```
+Solid `var(--bg)` background + `1px solid var(--hairline)` bottom border.
+
+---
+
+### Sizing & Tokens
+
+| Property | Token | Value |
+|---|---|---|
+| Container padding | — | `8px` top · `var(--gutter)` sides · `14px` bottom |
+| Logo height | — | `26px`, `width: auto` — never distort |
+| Icon button size | `--icon-wrapper-sm` | `40×40px` |
+| Icon button radius | — | `50%` circular |
+| Icon SVG size | `--icon-size-xs` | `14px` · `fill: currentColor` |
+| Notification dot | `--jio` / `--bg` | `7×7px` · `top:8px right:8px` · ring `0 0 0 2px var(--bg)` |
+| Scrolled bg | — | `rgba(0,0,0,.7)` + `blur(14px)` |
+| Hide threshold | — | `scrollTop > 80px` + scrolling down |
+| Jitter guard | — | `8px` delta filter |
+| Transition | `--dur-default` `--spring` | `200ms cubic-bezier(.22,1,.36,1)` |
+| Hide transform | — | `translateY(-110%)` |
+| z-index | — | `40` |
+| Active press | `--dur-fast` | `scale(.95)` · bg `rgba(255,255,255,.08)` |
+
+---
+
+### Icon button — shared spec
+
+`.icon-btn` is **identical** across all AppBar variants as the base class. Only the `appbar--detail` back button adds `.icon-btn--dark` for legibility over hero imagery.
 
 ```css
+/* Base — used on home search, bell; inner-page back, kebab */
 .icon-btn {
-  width: var(--icon-wrapper-sm);   /* 40px */
+  width: var(--icon-wrapper-sm);
   height: var(--icon-wrapper-sm);
   border-radius: 50%;
   background: rgba(255,255,255,.04);
@@ -103,101 +159,136 @@ The `.icon-btn` style is **identical** across `appbar--home` and `appbar--detail
 }
 .icon-btn:active {
   background: rgba(255,255,255,.08);
-  transform: scale(.95);           /* never .92 or .96 — .95 is the contracted value */
+  transform: scale(.95);   /* contracted value — never .92 or .96 */
 }
 .icon-btn svg {
-  width: var(--icon-size-xs);      /* 14px */
+  width: var(--icon-size-xs);
   height: var(--icon-size-xs);
-  fill: currentColor;              /* solid glyph — no stroke, no stroke-width */
+  fill: currentColor;      /* solid glyph — no stroke, no stroke-width */
   color: var(--text);
+}
+
+/* Dark-glass modifier — appbar--detail back button only (over hero image) */
+.icon-btn--dark {
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: none;
+}
+.icon-btn--dark:active {
+  background: rgba(0,0,0,.65);
 }
 ```
 
-**Rule:** Any new AppBar surface reuses `.icon-btn` as-is. Changing bg opacity, scale, or icon style per-surface = drift violation.
+**Rule:** Do not create variant-specific icon button classes (e.g. `.gd-icon-btn`). Use `.icon-btn` + `.icon-btn--dark` only.
 
-**Forbidden in AppBar (all variants):**
-- Avatar / profile button — belongs in a dedicated profile surface, not the bar
-- Heart / wishlist / like button — page-level action, not a nav element
-- Any icon not search, bell, or back — requires governance approval before adding
-- Notification dot: `7×7px` hard-coded (brand badge size, not a layout token)
+---
 
-| State | Spec |
-|---|---|
-| default | logo white, icon buttons `rgba(255,255,255,.04)` bg + `1px solid var(--hairline)` |
-| icon-button active/pressed | bg → `rgba(255,255,255,.08)` + `transform: scale(.95)`, `--dur-fast` |
-| scrolled (`scrollTop > 80px`) | container bg → `rgba(0,0,0,.7)` (`.header-scrolled`) |
-| scroll-hidden (scrolling down) | `transform: translateY(-110%)` (`.header-hidden`), `transition: transform .3s ease` |
-| scroll-visible (scrolling up) | remove `.header-hidden`; dead-zone ±6px prevents jitter |
+### Icons (DLS library)
 
-**Notification dot:** `7×7px`, `background: var(--jio)`, `border-radius: 50%`, `position: absolute; top: 8px; right: 8px`, `box-shadow: 0 0 0 2px var(--bg)` (knockout ring). Toggle with `.has-notification` class on bell button.
+All icons from `icons/svg/`. `24×24` viewBox, solid fill paths, no stroke.
 
-**Scroll JS contract:**
+| Icon | File | Used in |
+|---|---|---|
+| Search | `ic_search.svg` | Home |
+| Notification | `ic_notification.svg` | Home |
+| Back / chevron left | `ic_chevron_left.svg` | Game detail, Inner page |
+| Kebab / more | `ic_more_vertical.svg` | Inner page (optional) |
+
+```css
+.icon-btn          { color: var(--text); }
+.icon-btn svg      { fill: currentColor; }
+/* Never use fill="<hex>" or stroke on DLS icons */
+```
+
+---
+
+### States
+
+**Home scroll states:**
+
+| State | Class | Spec |
+|---|---|---|
+| transparent | `.appbar` | No background |
+| scrolled | `.appbar.header-scrolled` | `rgba(0,0,0,.7)` + `blur(14px)` |
+| hidden | `.appbar.header-hidden` | `translateY(-110%)` |
+
+**Notification dot:**
+Add `.has-notification` to bell button. Dot: `7×7px`, `background: var(--jio)`, `box-shadow: 0 0 0 2px var(--bg)`, `position: absolute; top:8px; right:8px`.
+
+```html
+<button class="icon-btn has-notification" aria-label="Notifications, new">
+  <!-- bell svg -->
+  <span class="dot" aria-hidden="true"></span>
+</button>
+```
+
+**PASS badge** (home only, after logo):
+```html
+<span class="mp-badge">PASS</span>
+```
+Hide with `display:none` when user has no pass.
+
+---
+
+### Scroll JS contract
+
 ```javascript
 (function(){
-  var sc = document.getElementById('scroller');
+  var sc  = document.getElementById('scroller');
   var bar = document.querySelector('.appbar');
-  var lastY = 0, threshold = 6;
+  var lastY = 0, threshold = 8;   /* 8px jitter guard */
   sc.addEventListener('scroll', function(){
     var y = sc.scrollTop;
     bar.classList.toggle('header-scrolled', y > 80);
-    if(Math.abs(y - lastY) < threshold) return;
+    if (Math.abs(y - lastY) < threshold) return;
     bar.classList[y > lastY ? 'add' : 'remove']('header-hidden');
     lastY = y;
   }, {passive:true});
 })();
 ```
 
-**Platform:**
-- Mobile: primary surface. Scroll hide/show active.
-- Web: keep bar always visible (no hide-on-scroll); `--gutter` expands to 40px automatically via token.
-- TV: **not used** — TV uses sidebar navigation, not a top AppBar.
-
-**A11y:** `<header role="banner">`; logo `<img alt="JioGames">`; icon buttons are `<button>` with `aria-label="Search"` / `aria-label="Notifications"`; bell with dot adds `aria-label="Notifications, new"`. Focus ring on buttons uses `box-shadow: 0 0 0 3px rgba(0,168,89,.4)`.
-
-**Icon governance note:** Icons inside AppBar buttons must be solid glyphs from `icons/` library — `fill: currentColor`, no `stroke`, no `stroke-width`. The source design spec showing `stroke-width: 1.8` is **non-compliant** with the DLS icon system and must not be implemented.
-
-### AppBar — Detail variant (`appbar--detail`)
-
-Inner/detail pages (game detail, pass upsell, settings, search results) use a simplified bar with back navigation only.
-
-**Anatomy:** container + back-button + (optional page title) + (optional single action).
-**Tokens:** same token set as home variant. Title uses `--text` · type `text.body` weight 700.
-**Radius:** `--pill` — back button circular. Container no radius.
-**Sizing:**
-- Container: same full-width, same padding as home variant
-- Back button: `width: var(--icon-wrapper-sm); height: var(--icon-wrapper-sm)` (40px), `border-radius: 50%`
-- Back icon SVG: `var(--icon-size-xs)` (14px) — solid chevron-left glyph, `fill: currentColor`
-- Page title: optional, `font-size: 16px; font-weight: 700`, centred between back button and trailing action (or trailing edge if no action)
-
-| State | Spec |
-|---|---|
-| default | back button `rgba(255,255,255,.04)` bg + `1px solid var(--hairline)` |
-| back button active | bg → `rgba(255,255,255,.08)` + `transform: scale(.95)` |
-| title present | single line, truncated with ellipsis at 60% container width max |
-| title absent | back button left-aligned, rest of bar empty |
-
-**Scroll behaviour:** **fixed** — no hide-on-scroll. Back button must always be reachable. Add `.header-scrolled` background blur on scroll if content passes underneath.
-
-**No scroll JS required** unless adding the blur-on-scroll effect:
+`appbar--detail` and `appbar--inner`: no hide-on-scroll. Blur-on-scroll only:
 ```javascript
 scroller.addEventListener('scroll', function(){
   bar.classList.toggle('header-scrolled', scroller.scrollTop > 20);
 }, {passive:true});
 ```
 
-**Platform:**
-- Mobile/Web: back button taps `history.back()` or explicit route pop.
-- TV: **not used** — TV uses D-pad focus to navigate back; no visible back button.
+---
 
-**A11y:** back button `<button aria-label="Back">`; if title present, it is a `<h1>` (detail page is a new context); trailing action needs `aria-label`.
+### Platform
 
-**When to use which variant:**
-
-| Surface | Variant |
+| Platform | Behaviour |
 |---|---|
-| Home, Browse, Library, Profile (top-level) | `appbar--home` (logo + search + bell) |
-| Game detail, Pass upsell, Search results, Settings | `appbar--detail` (back + optional title) |
-| Full-screen immersive (cinematic intro, OTP) | No AppBar |
+| Mobile | All 3 variants. Scroll hide/show active on home. |
+| Web | Home bar always visible (no hide). `--gutter` → 40px via token. |
+| TV | **Not used** — sidebar nav, D-pad back. No AppBar on TV. |
+
+---
+
+### A11y
+
+- Container: `<header role="banner">`
+- Logo: `<img alt="JioGames">`
+- Search: `<button aria-label="Search">`
+- Bell (no dot): `<button aria-label="Notifications">`
+- Bell (with dot): `<button aria-label="Notifications, new">`
+- Back: `<button aria-label="Back">`
+- Kebab: `<button aria-label="More options">`
+- Inner page title: `<h1>` (new page context)
+- Focus ring: `box-shadow: 0 0 0 3px rgba(0,168,89,.4)`
+
+---
+
+### Forbidden (all variants)
+
+- Avatar / profile button — dedicated profile surface only
+- Heart / wishlist / like — page-level action, not nav
+- `stroke-width` on any icon SVG — solid glyph only
+- Raw `px` for icon button size — use `var(--icon-wrapper-sm)`
+- Variant-specific icon button classes — use `.icon-btn` / `.icon-btn--dark` only
+- Any icon beyond search / bell / back / kebab — governance approval required
 
 ---
 

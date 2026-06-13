@@ -1,5 +1,8 @@
 # JioGames AppBar — Component Spec
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 **File:** `jiogames-header.html`
 
 ---

@@ -1,5 +1,8 @@
 # JioGames Component Contracts
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 > A component is **defined once** here — its tokens, every state, and its behavior on every platform. Screens **compose** contracted components; they do not re-implement CSS. If a screen needs a component variant that isn't contracted, that's a governance request, not a one-off.
 
 This is the layer that stops screens from reinventing buttons and cards (the biggest drift source). Typography and spacing govern *values*; this governs *components*.

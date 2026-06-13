@@ -1,5 +1,7 @@
 # JioGames Colour Governance
 
+> **Inherits `references/_core-rules.md`.** Rules in that file (dark-only, JioType-only, token-first, no Lucide, no silent deviation) are not repeated here.
+
 > **Token-first, not eye-first.** Designers and developers choose a **semantic token**, not a hex value. If no existing token covers the need, that is a governance request — not permission to add a raw value.
 
 JioGames is dark-only. Green is the sole primary action accent. Blue and purple are banned everywhere except narrow category-coding decoration. This document tells you **which token to use**, **when not to add a new colour**, **what is forbidden**, and **how QA catches violations before release**.
@@ -477,8 +479,6 @@ These are hard DLS violations. `validate.sh` catches many — the rest are revie
 | Any indigo or purple in brand, premium, or UI state role | Same — `--violet` is category art only |
 | Ultimate Pass rendered in any colour other than green (`--ultimate`) | Critical brand violation |
 | Grey drop-shadow (`box-shadow: … rgba(0,0,0,.2)` soft diffuse) | Use glow instead |
-| `transition: all` | Always list explicit properties |
-| Non-JioType `font-family` | JioType only |
 | `--text3` on payment, error, subscription, or OTP text | Contrast too low for critical info |
 | Raw hex/rgba in component fills, borders, or text (outside approved gradient recipes in §9) | Bypasses token pipeline |
 | `opacity: 0` as a disabled state without `pointer-events: none` | Ghost interaction zone — accessibility hazard |

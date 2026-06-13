@@ -1,5 +1,8 @@
 # JioGames Sizing Scale
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 > Control heights and component dimensions are tokens, not magic numbers. Use `var(--ctrl-h)` not `54px`. The TV platform gets its sizes automatically — no manual overrides needed.
 
 Component heights, card dimensions, and minimum touch targets all live in `tokens/tokens.json` under `"control"` and are generated into `tokens/tokens.css`. This document governs **which token to use, when, and why**.

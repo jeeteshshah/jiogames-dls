@@ -33,6 +33,8 @@ jiogames-dls/
 │   ├── build.py                ← Generator (run after editing tokens.json)
 │   └── validate.sh             ← 14 drift checks, exit 0/1
 ├── references/
+│   ├── _core-rules.md          ← Universal rules — read first for every task
+│   ├── _task-router.md         ← Exact file list per task (token budget)
 │   ├── tokens-and-components.md
 │   ├── colour-governance.md
 │   ├── typography.md

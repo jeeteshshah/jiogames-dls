@@ -4,6 +4,18 @@ All notable changes to the design language system. Most recent first.
 
 ---
 
+## [Unreleased] — 2026-06-14 (patch 4)
+
+### Added
+- **`references/_core-rules.md`** — New authoritative source for all universal non-negotiables: dark-only, JioType-only, token-first (replacement table), green-first, no generic AI UI, solid-glyph icons only, no silent deviation (with exact ask format), heading/type rules, glow-over-shadow, platform input models. Read first for every task.
+- **`references/_task-router.md`** — New file mapping every task type to the minimum files to read. Never read all reference files — only `_core-rules.md` + what the task requires.
+- **SKILL.md: TOKEN BUDGET RULE** — Explicit rule: read `_core-rules.md` + task-specific files only; start from templates; search `icons/index.json` not all SVGs; read examples only if stuck.
+
+### Changed
+- **SKILL.md: 538 → 159 lines** — Stripped all content now owned by `_core-rules.md` (brand rules, do/don't list, JioGames look summary, ambiguity handling, asset fallback rules, detailed workflows, version history details). Kept: hard stops, session contract, token budget rule, generation decision gate, output contract, validation, task routing quick-ref, reference index, companion skills.
+- **`references/` (all 14 files)** — Added `> Inherits _core-rules.md` note after heading. Global rule boilerplate removed from 5 files: `tokens-and-components.md` (1 line), `colour-governance.md` (2 table rows), `typography.md` (1 line), `icons.md` (4 lines — third-party policy section), `motion.md` (1 line from Core Principles).
+- **README.md** — Added `_core-rules.md` and `_task-router.md` to structure listing.
+
 ## [Unreleased] — 2026-06-14 (patch 3)
 
 ### Added

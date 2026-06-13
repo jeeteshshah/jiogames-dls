@@ -1,5 +1,8 @@
 # JioGames Craft Details
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 Details that separate polished gaming UI from generic dark-mode apps.
 
 ---

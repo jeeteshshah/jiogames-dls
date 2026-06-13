@@ -1,5 +1,8 @@
 # JioGames Spacing & Grid — Governance System
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 > This guide is **token-first, not screen-first**. Future screens must not introduce new spacing, gutters, grids, or layout behaviour unless an existing token or layout pattern cannot solve the need. Designers choose **spacing intent**, not random pixel values. The same layout role scales across Mobile, Web, and TV.
 
 > **Spacing is semantic.** Small gaps show relationship. Large gaps show separation. Gutters protect content. Grids create structure. Rails create browsing momentum. Choose the spacing **intent**, not the pixel value.

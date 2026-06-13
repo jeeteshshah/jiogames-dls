@@ -1,5 +1,7 @@
 # JioGames Icon Governance
 
+> **Inherits `references/_core-rules.md`.** Rules in that file (dark-only, JioType-only, token-first, no Lucide, no silent deviation) are not repeated here.
+
 > **In-house solid glyph library only.** The official Jio SVG icon library is the sole approved source. All icons are solid filled glyphs — not outline stroke icons. Lucide and all third-party icon libraries are banned. Lucide is outline-based and does not match this icon system's visual language; it must not be used in any governed output, review, demo, or production code.
 
 **Structure**
@@ -55,10 +57,6 @@ python3 tools/export-all-icons.py --token YOUR_TOKEN    # full library (1,646 ic
   <path fill="currentColor" d="..."/>
 </svg>
 ```
-
-### Third-party icon library policy
-
-Lucide is outline-based. It does not match the solid glyph style of this library and must not be used in any context. No third-party icon library is approved as a substitute or fallback.
 
 If an icon does not exist in the Jio library, request it through the contribution process (`_info/Icons-Contribution-Intro` in the Figma file). Do not reach for Lucide or any external set.
 

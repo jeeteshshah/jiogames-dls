@@ -1,5 +1,8 @@
 # JioGames Anti-AI-Slop Guide
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 **Your UI must not look like a generic dark-mode SaaS app.**
 
 AI models default to "dark mode" by putting a white-card app on a dark grey background. That is not JioGames. JioGames is a gaming platform with depth, glow, atmosphere, and brand-specific design decisions.

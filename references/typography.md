@@ -1,5 +1,7 @@
 # JioGames Typography — Governance System
 
+> **Inherits `references/_core-rules.md`.** Rules in that file (dark-only, JioType-only, token-first, no Lucide, no silent deviation) are not repeated here.
+
 > **This guide is token-first, not screen-first.** Future screens must not introduce new typography unless an existing token cannot solve the communication need. Designers choose a **semantic role**, not a font size. The same role scales through platform tokens across Mobile, Web, and TV.
 
 JioType is the sole typeface. This document is not just a spec — it tells you **how to choose**, **when not to create new styles**, **how to scale across platforms**, and **how QA catches violations before release**.
@@ -24,8 +26,6 @@ JioType is the sole typeface. This document is not just a spec — it tells you 
 ---
 
 # 1. Typeface & Font Loading
-
-JioType only. No Inter/Outfit/Roboto substitution, ever.
 
 ```css
 @font-face { font-family:'JioType'; src:url('/Assets/font/JioType-Light.ttf');        font-weight:300; font-display:swap; }

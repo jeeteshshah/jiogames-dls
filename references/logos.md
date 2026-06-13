@@ -1,5 +1,8 @@
 # JioGames Logo Governance
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 > Logos are not icons. Never apply `currentColor`, never override colours via CSS, never use as a mask or background. The logo is a fixed brand asset — only the approved files in `logos/` may be used.
 
 **Structure**

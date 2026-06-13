@@ -1,5 +1,8 @@
 # JioGames Screens & Navigation Governance
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 > App shell, navigation, screen patterns, and cinematic techniques — all using design system tokens. Raw px and hex literals in screen CSS are violations; use `var(--token)` and reference approved layout constants (§12) only where no token exists.
 
 **Structure**

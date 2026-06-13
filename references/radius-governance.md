@@ -1,5 +1,8 @@
 # JioGames Radius Governance
 
+> **Inherits `_core-rules.md`** — dark-only, JioType-only, token-first, no Lucide, no silent deviation rules are not repeated here.
+
+
 > Every component has one canonical radius token. If a screen uses a different value for the same component, that is drift — not a design decision.
 
 Radius is not decoration. In JioGames' dark UI, radius communicates **layer depth**: smaller radius for artwork-led surfaces, larger radius for interactive chrome, maximum pill for CTAs and action chips. The scale runs from `--r1` (8px) to `--r9` (28px) plus `--pill` (100px).

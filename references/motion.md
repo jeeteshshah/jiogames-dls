@@ -1,5 +1,7 @@
 # JioGames Motion Governance
 
+> **Inherits `references/_core-rules.md`.** Rules in that file (dark-only, JioType-only, token-first, no Lucide, no silent deviation) are not repeated here.
+
 > **Token-first.** Use `var(--dur-*)` and `var(--spring)` — never raw milliseconds or cubic-bezier strings in component CSS. Raw values are allowed only inside approved named keyframe recipes (§13) or the Approved Motion Constants table (§4).
 
 JioGames motion is **calm, fluid, spatial, and purposeful**. Every animation earns its place. Motion communicates state, relationship, and feedback — not decoration.
@@ -61,11 +63,10 @@ Use Apple-level restraint as the quality standard — not Apple visuals or platf
 2. **Raw durations only in approved contexts.** Keyframe percentages and §4 Motion Constants may use raw values. Everything else uses tokens.
 3. **Compositor properties for movement.** Use `transform` and `opacity` for layout movement and loops. One-shot state changes (`border-color`, `background`, `box-shadow`) are allowed when tokenised and not looped.
 4. **Spring easing as default.** `--spring` for most enters. `--spring-bounce` only for one-shot celebration feedback (OTP fill, success).
-5. **No `transition: all`.** Always list explicit properties.
-6. **Reduced motion is mandatory.** Every animated component has a fallback. Focus glow is exempt — it is an affordance.
-7. **Purposeful, not decorative.** If removing an animation makes the UI clearer, remove it.
-8. **Interactive UI under 500ms.** TV enter up to `--dur-tv-enter` (560ms). Ambient loops exempt.
-9. **Motion communicates state.** Not personality. Not brand energy. State.
+5. **Reduced motion is mandatory.** Every animated component has a fallback. Focus glow is exempt — it is an affordance.
+6. **Purposeful, not decorative.** If removing an animation makes the UI clearer, remove it.
+7. **Interactive UI under 500ms.** TV enter up to `--dur-tv-enter` (560ms). Ambient loops exempt.
+8. **Motion communicates state.** Not personality. Not brand energy. State.
 
 ---
 

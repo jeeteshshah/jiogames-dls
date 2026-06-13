@@ -1,5 +1,7 @@
 # JioGames Component Patterns & Token Index
 
+> **Inherits `references/_core-rules.md`.** Rules in that file (dark-only, JioType-only, token-first, no Lucide, no silent deviation) are not repeated here.
+
 > This document is **not** the source of truth for typography, spacing, colour, radius, sizing, or motion.
 > - Typography: [typography.md](typography.md) · Spacing: [spacing-and-grid.md](spacing-and-grid.md)
 > - Colour: [colour-governance.md](colour-governance.md) · Radius: [radius-governance.md](radius-governance.md)
@@ -193,8 +195,6 @@ These tokens appear throughout component state definitions. Listed here so devel
 | `--spring` | `cubic-bezier(.22,1,.36,1)` | Default natural enter easing |
 | `--spring-bounce` | `cubic-bezier(.34,1.56,.64,1)` | OTP fill pop, selection celebrate |
 | `--ease-screen` | `cubic-bezier(.42,0,.18,1)` | Screen-to-screen slide |
-
-Rule: never use `transition: all` — always list explicit properties and pair with one of the duration tokens above.
 
 ### State
 

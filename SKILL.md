@@ -12,6 +12,44 @@ description: >
   Use even if the user just says "make it look like JioGames" or "JioGames style."
 ---
 
+## ⛔ HARD STOPS — Read Before Anything Else
+
+These are non-negotiable blockers. If any condition below is true during generation, STOP and fix before continuing. Do not proceed past a violation.
+
+### Before writing a single line of code, confirm:
+- [ ] I have read `references/tokens-and-components.md`
+- [ ] I have read `references/component-contracts.md`
+- [ ] Platform is classified (Mobile / Web / TV)
+- [ ] Required states are listed
+
+### While writing CSS, if I am about to write any of these — STOP and replace:
+
+| I was about to write | Replace with |
+|---|---|
+| `#00A859` or any hex | `var(--jio)` or correct token |
+| `#06080F` | `var(--bg)` |
+| `#111115` | `var(--card-bg)` |
+| `#F4F2EE` or `white` or `#fff` | `var(--text)` |
+| `#A8ADBA` | `var(--text2)` |
+| `54px` or `36px` | `var(--ctrl-h)` or `var(--ctrl-h-sm)` |
+| `100px` or `50%` on buttons | `var(--pill)` |
+| `14px` or `20px` border-radius | `var(--r4)` or `var(--r7)` |
+| `Inter` or `Outfit` or any font | `JioType` only |
+| `font-weight: 400` or `600` or `800` | Use `300`, `500`, `700`, or `900` only |
+| `transition: all` | List explicit properties |
+| `color: white` or `color: #fff` | `color: var(--text)` |
+| `box-shadow` with grey | `var(--jio-glow)` |
+| `background: white` or any light surface | `var(--bg)` or dark token |
+
+### After writing code, before responding — STOP and run:
+```bash
+bash tokens/validate.sh path/to/generated/
+```
+
+If exit code is non-zero → fix all ERRORs → re-run → only then respond. If validate.sh does not exist → manually audit every line of styles.css against the table above before responding.
+
+---
+
 # JioGames Design Language System
 
 You are creating, editing, or reviewing UI that follows JioGames' design language. This skill gives you tokens, components, platform rules, and craft standards — plus a mandatory validation loop to catch violations before presenting work.
@@ -335,7 +373,7 @@ When artwork is not provided:
 
 ## Final Self-Review — Before Responding
 
-Before presenting any generated or edited UI, verify mentally:
+**STOP. Do not respond until each item below is confirmed true:**
 
 1. No raw hex (`#xxxxxx`), raw px for controlled dimensions (`54px`, `36px`, etc.), or banned font weights (`400`, `600`, `800`) in `styles.css`
 2. No light surfaces — all backgrounds use dark tokens (`var(--bg)`, `var(--card-bg)`, etc.)

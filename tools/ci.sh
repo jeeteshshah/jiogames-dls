@@ -32,9 +32,19 @@ else
   fail=1
 fi
 
+# ── Step 1b: icon audit ─────────────────────────────────────
+echo ""
+echo "${BLD}[1b/4] Icon audit${OFF}"
+if python3 "$ROOT/tools/audit-icons.py" > /dev/null 2>&1; then
+  echo "${GRN}✓ No high-risk icon violations${OFF}"
+else
+  echo "${RED}✗ Icon audit found high-risk violations — run: python3 tools/audit-icons.py${OFF}"
+  fail=1
+fi
+
 # ── Step 2: drift validator ──────────────────────────────────
 echo ""
-echo "${BLD}[2/3] Drift validator${OFF}"
+echo "${BLD}[2/4] Drift validator${OFF}"
 
 if [ $# -gt 0 ]; then
   targets=("$@")
@@ -50,14 +60,26 @@ fi
 
 # ── Step 3: visual regression ────────────────────────────────
 echo ""
-echo "${BLD}[3/3] Visual regression${OFF}"
+echo "${BLD}[4/4] Visual regression${OFF}"
+
+GOLDENS="$ROOT/tests/goldens"
 
 if [ "$SKIP_VISUAL" = "1" ]; then
   echo "  skipped (SKIP_VISUAL=1)"
 elif ! python3 -c "import playwright" 2>/dev/null; then
-  echo "  skipped (Playwright not installed — run: pip install playwright && playwright install chromium)"
+  echo "  skipped (playwright Python package missing — run: pip install playwright && playwright install chromium)"
+elif ! python3 - 2>/dev/null <<'PYEOF'
+from playwright.sync_api import sync_playwright
+with sync_playwright() as p:
+    b = p.chromium.launch(headless=True)
+    b.close()
+PYEOF
+  echo "  skipped (Playwright chromium binary not installed — run: playwright install chromium)"
 elif [ $# -gt 0 ]; then
   echo "  skipped (file-targeted run — visual test runs on full repo only)"
+elif [ ! -d "$GOLDENS" ] || [ -z "$(ls -A "$GOLDENS" 2>/dev/null)" ]; then
+  echo "${RED}✗ No golden screenshots in tests/goldens/ — run: GOLDEN_UPDATE=1 ./tools/ci.sh to generate${OFF}"
+  fail=1
 else
   if python3 "$ROOT/tools/visual-test.py"; then
     echo "${GRN}✓ Visual regression passed${OFF}"

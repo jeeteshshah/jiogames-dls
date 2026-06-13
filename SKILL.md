@@ -60,7 +60,7 @@ You are creating, editing, or reviewing UI that follows JioGames' design languag
 
 ## Companion Skills
 
-This skill works with two companion skills. Use them in every generation session.
+This skill works with two companion skills. Use them when relevant to the task — they are optional, not required for every session.
 
 ### `frontend-design` — generation quality layer
 
@@ -201,6 +201,8 @@ TV has no hover and no bottom sheets. D-pad focus is the primary affordance. Mob
 | Build a pass or subscription screen | Read Pass & Upgrade Screens in `references/screens-and-navigation.md` + Pass Card contract in `references/component-contracts.md` |
 | Build a rail | Read Rail System in `references/spacing-and-grid.md` + Rail contract in `references/component-contracts.md` before writing code |
 | Add or change a token | Edit tokens.json → run build.py → update CHANGELOG.md |
+| Add or choose icons | Read `references/icons.md` → use only `icons/svg/` or `icons/sprite.svg` → no Lucide / third-party icons |
+| Audit icon library | Run `python3 tools/audit-icons.py` → fix high-risk (exit 1) issues before shipping |
 
 ---
 
@@ -215,7 +217,8 @@ TV has no hover and no bottom sheets. D-pad focus is the primary affordance. Mob
 | `references/radius-governance.md` | Component→radius canonical map, inner-radius nesting rule |
 | `references/sizing-scale.md` | Control height tokens, touch target rules, TV compact guard, governance process |
 | `references/motion.md` | Easing + duration tokens, keyframe library, component motion map, performance rules, TV rules, reduced motion |
-| `references/component-contracts.md` | 11 component contracts — tokens, radius, sizing, states, platform, a11y, owner |
+| `references/icons.md` | Icon governance — official solid glyph library, naming, sizing, wrappers, accessibility, manifest, third-party icon ban |
+| `references/component-contracts.md` | 12 component contracts — tokens, radius, sizing, states, platform, a11y, owner |
 | `references/screens-and-navigation.md` | App shell, navigation, screen patterns, pass screens, cinematic techniques, approved layout constants |
 | `references/governance.md` | Ownership, RFC process, semver, CHANGELOG, deprecation policy, release checklist |
 | `references/anti-ai-slop.md` | Quality check — patterns that break the JioGames look |
@@ -259,7 +262,7 @@ TV has no hover and no bottom sheets. D-pad focus is the primary affordance. Mob
 
 - **Dark only.** No light mode. No white surfaces.
 - **One primary accent: green.** `var(--jio)` for CTAs, borders, checks, eyebrows, active states.
-- **Ultimate Pass is green.** `var(--ultimate)`. Never blue.
+- **Pass tiers: Mobile Pass · All Screen Pass · Connect & Play Pass.** All Screen Pass uses `var(--ultimate)`. Never blue on any pass tier.
 - **Weight 900 for all headings.** 300/500/700/900 only — 400/600/800 banned.
 - **Negative letter-spacing** on text ≥16px.
 - **JioType only.** No Inter, Outfit, Roboto.
@@ -289,6 +292,40 @@ If details are missing, make the safest JioGames-compliant assumption and docume
 Stop and ask only when:
 - TV vs Mobile/Web is explicitly unclear and the work would be unusable if wrong (TV has no sheets, no hover, D-pad only)
 - A new component is needed that has no contract and cannot be approximated by composition
+
+---
+
+## NON-NEGOTIABLE ADHERENCE RULE
+
+This skill is a design contract, not inspiration.
+
+When generating, editing, or reviewing JioGames UI:
+
+1. Follow the existing DLS exactly.
+2. Do not invent new colours, spacing, radius, typography, motion, icon styles, component variants, or layout patterns.
+3. Do not silently "improve," "modernise," "reinterpret," or "simplify" the system.
+4. Do not use generic AI defaults when the DLS already defines a rule.
+5. Do not replace a missing rule with a personal design decision.
+6. Do not create one-off exceptions.
+
+**If the requested output cannot be created using the current DLS, STOP and use this exact format:**
+
+> The current JioGames DLS does not define this clearly.
+> I need your approval before changing or extending the system.
+>
+> Missing / conflicting area:
+>
+> * [state the gap]
+>
+> Recommended options:
+>
+> 1. Use the closest existing DLS rule: [option]
+> 2. Add a new governed rule: [option]
+> 3. Treat this as a one-off exception: [option]
+>
+> Which direction should I follow?
+
+Until the user answers, do not generate the final UI.
 
 ---
 
@@ -332,7 +369,7 @@ When artwork is not provided:
 
 1. Don't use light mode — no white backgrounds anywhere
 2. Don't use Inter, Outfit, or any font other than JioType
-3. Don't use blue/indigo/purple — JioGames is green end-to-end, including Ultimate Pass
+3. Don't use blue/indigo/purple — JioGames is green end-to-end, including all Pass tiers
 4. Don't use heavy drop shadows — use `var(--jio-glow)` instead
 5. Don't use `border-radius: 50%` on cards — only avatars and circular icon wrappers
 6. Don't use `color: #fff` or `color: white` for body copy — use `var(--text)`

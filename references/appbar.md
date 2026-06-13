@@ -11,8 +11,8 @@
 | Home — transparent | `.appbar` | Over hero image, page top |
 | Home — scrolled | `.appbar.header-scrolled` | After scroll past 80px |
 | Home — hidden | `.appbar.header-hidden` | Scrolling down past threshold |
-| Game detail | `.appbar.appbar-detail` | Over game hero, back button only |
-| Inner page | `.appbar.appbar-inner` | Notifications, profile, etc. |
+| Game detail | `.appbar.appbar--detail` | Over game hero, back button only |
+| Inner page | `.appbar.appbar--inner` | Notifications, profile, etc. |
 
 ---
 

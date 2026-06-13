@@ -4,7 +4,29 @@ All notable changes to the design language system. Most recent first.
 
 ---
 
-## [Unreleased] — 2026-06-14
+## [Unreleased] — 2026-06-14 (patch 2)
+
+### Added
+- **SKILL.md: NON-NEGOTIABLE ADHERENCE RULE** — Hard design contract block. Defines exact STOP format when DLS has a gap; no UI generated until user approves direction.
+- **SKILL.md: `references/icons.md`** added to "How This Skill Is Organised" table.
+- **SKILL.md: Icon task routing** — Add/choose icons and audit icon library entries added to Task Routing table.
+- **`tools/audit-icons.py`: SVG content checks** — New `STROKE_ICON` and `HARDCODED_FILL` categories check SVG file contents, not just filenames.
+- **`tools/ci.sh`: Icon audit step** — Step 1b runs `audit-icons.py` and fails CI on high-risk violations.
+- **`tools/ci.sh`: Golden screenshot guard** — CI fails if `tests/goldens/` is missing or empty outside `GOLDEN_UPDATE=1` mode.
+- **`tools/ci.sh`: Playwright binary detection** — Separate checks for Python package missing vs. browser binary not installed.
+- **`README.md`** — Expanded from 1 line to full documentation: install, structure, token pipeline, CI, icon library, platforms, pass tiers, governance.
+
+### Changed
+- **SKILL.md: Companion skills** — Changed from mandatory ("every generation session") to optional ("when relevant to the task").
+- **SKILL.md: "11 component contracts"** — Corrected to **12** (AppBar was added).
+- **SKILL.md: Pass naming** — "Ultimate Pass" → "Mobile Pass · All Screen Pass · Connect & Play Pass" throughout.
+- **`references/appbar.md`: AppBar class names** — `appbar-detail` / `appbar-inner` → `appbar--detail` / `appbar--inner` (BEM double-dash, matches component-contracts.md canonical).
+- **`tools/audit-icons.py`: Near-duplicate detection** — Reduced noise: only flags when one name is a strict prefix of another with exactly 1 extra token (previously flagged too many false positives).
+- **`tools/audit-icons.py`: High-risk exit code** — Now exits 1 when `STROKE_ICON`, `HARDCODED_FILL`, `CASE`, or `TRAILING_SPACE` issues found (previously always exited 0).
+- **`tools/audit-icons.py`: Manifest fallback** — Falls back to `icons/index.json` when `icons/icons-manifest.json` doesn't exist.
+- **`tools/ci.sh`: Step count** — Updated from `[2/3]`/`[3/3]` to `[2/4]`/`[4/4]`.
+
+## [Unreleased] — 2026-06-14 (patch 1)
 
 ### Added
 - **SKILL.md hard stops** — Non-negotiable pre-code checklist, CSS violation replacement table, and post-code `validate.sh` gate. Final Self-Review is now a hard block, not a suggestion. (`36dcda8`)

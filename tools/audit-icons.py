@@ -19,7 +19,10 @@ from collections import defaultdict
 HERE  = Path(__file__).parent
 ROOT  = HERE.parent
 ICONS = ROOT / "icons" / "svg"
+# Prefer icons-manifest.json; fall back to index.json if it doesn't exist
 MANIFEST = ROOT / "icons" / "icons-manifest.json"
+if not MANIFEST.exists():
+    MANIFEST = ROOT / "icons" / "index.json"
 
 # Spelling suspects — known misspellings in current library
 SPELLING_SUSPECTS = {
@@ -110,17 +113,20 @@ def audit(svg_dir: Path):
                 "alias": True,
             })
 
-    # 6. Near-duplicates (names within edit distance 1 of each other)
+    # 6. Near-duplicates — only flag when one name is a strict subset of another
+    # (reduces noise: "ic_add" and "ic_add_circle" are worth flagging;
+    #  "ic_arrow_left" and "ic_arrow_right" are not)
     name_set = set(names)
     seen_dupes = set()
     for name in names:
         for other in names:
             if name >= other:
                 continue
-            # Simple check: one contains the other minus one word
-            n_parts = set(name.split("_"))
-            o_parts = set(other.split("_"))
-            if len(n_parts.symmetric_difference(o_parts)) <= 2:
+            n_parts = name.split("_")
+            o_parts = other.split("_")
+            # Only flag if one is a prefix/suffix of the other with exactly 1 extra token
+            shorter, longer = (n_parts, o_parts) if len(n_parts) < len(o_parts) else (o_parts, n_parts)
+            if len(longer) - len(shorter) == 1 and shorter == longer[:len(shorter)]:
                 key = tuple(sorted([name, other]))
                 if key not in seen_dupes:
                     seen_dupes.add(key)
@@ -132,7 +138,39 @@ def audit(svg_dir: Path):
                         "alias": True,
                     })
 
-    # 7. Manifest cross-check
+    # 7. SVG content checks — stroke icons and missing currentColor
+    for svg_file in files:
+        content = svg_file.read_text(errors="ignore")
+        name = svg_file.stem
+        # Stroke icon: has stroke= attribute with a colour value (not "none")
+        if re.search(r'stroke\s*=\s*["\'](?!none)[^"\']+["\']', content):
+            issues["STROKE_ICON"].append({
+                "file": name,
+                "proposed": "Convert to fill-based solid glyph",
+                "reason": "stroke= attribute with colour — DLS requires fill:currentColor, no stroke icons",
+                "risk": "high",
+                "alias": False,
+            })
+        # CSS stroke in style attribute
+        elif re.search(r'style\s*=\s*["\'][^"\']*stroke\s*:', content):
+            issues["STROKE_ICON"].append({
+                "file": name,
+                "proposed": "Convert to fill-based solid glyph",
+                "reason": "CSS stroke: in style= — DLS requires fill:currentColor, no stroke icons",
+                "risk": "high",
+                "alias": False,
+            })
+        # fill= hardcoded to a colour (not currentColor or none on root <svg>)
+        if re.search(r'<(?:path|circle|rect|polygon|polyline|ellipse|line)[^>]+fill\s*=\s*["\'](?!currentColor|none|inherit)', content):
+            issues["HARDCODED_FILL"].append({
+                "file": name,
+                "proposed": "Replace fill= with fill=\"currentColor\"",
+                "reason": "Hardcoded fill colour — DLS icons must use fill=\"currentColor\" so colour is CSS-driven",
+                "risk": "high",
+                "alias": False,
+            })
+
+    # 8. Manifest cross-check
     manifest = {}
     if MANIFEST.exists():
         try:
@@ -175,14 +213,17 @@ def print_report(names, issues):
     print(f"Issues (excl. manifest): {total}")
     print("─" * 56)
 
-    order = ["CASE", "TRAILING_SPACE", "SPELLING", "NUMERIC_WORD",
-             "TOO_SHORT", "NEAR_DUPLICATE", "MANIFEST_ORPHAN", "NOT_IN_MANIFEST"]
+    order = ["STROKE_ICON", "HARDCODED_FILL", "CASE", "TRAILING_SPACE",
+             "SPELLING", "NUMERIC_WORD", "TOO_SHORT", "NEAR_DUPLICATE",
+             "MANIFEST_ORPHAN", "NOT_IN_MANIFEST"]
 
     for category in order:
         items = issues.get(category, [])
         if not items:
             continue
         label = {
+            "STROKE_ICON": "Stroke icons (DLS violation — must be solid fill)",
+            "HARDCODED_FILL": "Hardcoded fill colour (must be currentColor)",
             "CASE": "Uppercase letters",
             "TRAILING_SPACE": "Trailing/leading spaces",
             "SPELLING": "Probable misspellings",
@@ -249,6 +290,11 @@ def main():
         print_migration_table(issues)
     else:
         print_report(names, issues)
+
+    # Exit 1 if any high-risk issues found (blocks CI)
+    HIGH_RISK_CATEGORIES = {"STROKE_ICON", "HARDCODED_FILL", "CASE", "TRAILING_SPACE"}
+    if any(issues.get(cat) for cat in HIGH_RISK_CATEGORIES):
+        sys.exit(1)
 
 
 if __name__ == "__main__":

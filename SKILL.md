@@ -50,6 +50,114 @@ If exit code is non-zero → fix all ERRORs → re-run → only then respond. If
 
 ---
 
+## ⛔ NON-NEGOTIABLE ADHERENCE RULE
+
+This skill is a design contract, not inspiration.
+
+When generating, editing, or reviewing JioGames UI:
+
+1. Follow the existing DLS exactly.
+2. Do not invent new colours, spacing, radius, typography, motion, icon styles, component variants, or layout patterns.
+3. Do not silently "improve," "modernise," "reinterpret," or "simplify" the system.
+4. Do not use generic AI defaults when the DLS already defines a rule.
+5. Do not replace a missing rule with a personal design decision.
+6. Do not create one-off exceptions.
+
+**If the requested output cannot be created using the current DLS, STOP and use this exact format:**
+
+> The current JioGames DLS does not define this clearly.
+> I need your approval before changing or extending the system.
+>
+> Missing / conflicting area:
+>
+> * [state the gap]
+>
+> Recommended options:
+>
+> 1. Use the closest existing DLS rule: [option]
+> 2. Add a new governed rule: [option]
+> 3. Treat this as a one-off exception: [option]
+>
+> Which direction should I follow?
+
+Until the user answers, do not generate the final UI.
+
+---
+
+## 🔒 SKILL LOCK — Session Persistence
+
+**Once this skill is activated in a session, it locks ON for the remainder of that session.**
+
+Activation triggers (any one is enough):
+- User invokes `/jiogames-dls`
+- User says "use JioGames DLS" or "follow JioGames DLS"
+- Any JioGames UI, icon, logo, token, colour, spacing, motion, or copy task is received
+
+**After activation, without exception:**
+- Every generation turn — including turns with no explicit skill mention — must follow this skill
+- Skill cannot be deactivated mid-session by omission; only by explicit "stop using JioGames DLS"
+- Skill takes precedence over any conflicting default AI style
+- Skill takes precedence over `frontend-design` for token, colour, spacing, and radius decisions
+
+---
+
+## Activation Behaviour
+
+On first activation in a session:
+1. Confirm loaded: `references/tokens-and-components.md`, `references/component-contracts.md`
+2. Check platform classification — ask only if missing AND the ambiguity would make the output unusable (TV vs Mobile/Web gap is critical; mobile vs web is not)
+3. Apply SKILL LOCK
+4. Proceed with GENERATION DECISION GATE
+
+Do NOT:
+- Re-read all references on every turn (read once, apply for session)
+- Ask which platform unless truly ambiguous
+- Ask for confirmation before applying DLS rules — apply them and document assumptions
+
+---
+
+## Generation Decision Gate
+
+Before writing any UI, code, or design output, run this mentally:
+
+```
+1. Is a component contracted in component-contracts.md?
+   → YES: Use contracted spec. Never re-implement from scratch.
+   → NO: Continue.
+
+2. Is there a token for this value?
+   → YES: Use the token. No raw value.
+   → NO: Check colour/spacing/radius governance docs.
+         Still no token? → NON-NEGOTIABLE ADHERENCE RULE format. Stop.
+
+3. Is there an icon in icons/svg/?
+   → YES: Use it. fill:currentColor, no stroke.
+   → NO: Use closest available. Report gap in qa-report.md.
+
+4. Is there a motion token for this animation?
+   → YES: Use it.
+   → NO: → NON-NEGOTIABLE ADHERENCE RULE format. Stop.
+
+5. Is there a logo in logos/?
+   → YES: Use it. Never recreate or recolour.
+   → NO: Do not generate logos. Report gap.
+```
+
+---
+
+## Strict Generation Mode
+
+Run `bash tokens/validate.sh --strict path/to/generated/` before shipping any screen externally.
+
+Strict mode upgrades all WARNs to ERRs and adds:
+- Missing `tokens/tokens.css` import in any HTML screen → ERR
+- Missing `qa-report.md` in screen output → ERR
+- Missing `README.md` in screen output → ERR
+- `fill:none` on icon SVGs → ERR (WARN in normal mode)
+- `--s-N` spacing aliases → ERR (WARN in normal mode)
+
+---
+
 # JioGames Design Language System
 
 You are creating, editing, or reviewing UI that follows JioGames' design language. This skill gives you tokens, components, platform rules, and craft standards — plus a mandatory validation loop to catch violations before presenting work.
@@ -191,18 +299,35 @@ TV has no hover and no bottom sheets. D-pad focus is the primary affordance. Mob
 
 ## Task Routing
 
-| User asks to | Do this |
+| Task | Required behaviour |
 |---|---|
-| Create a new screen | Classify platform → read references → build → validate → deliver 4 files |
-| Redesign an existing screen | Identify violations → fix against governance docs → validate |
-| Build a component | Read component-contracts.md first → compose contracted component |
-| Review a design | Run `bash tokens/validate.sh path/to/file` → check each governance QA checklist → write qa-report.md |
-| Build TV UI | Read TV sections in motion.md, screens-and-navigation.md, sizing-scale.md before writing code |
-| Build a pass or subscription screen | Read Pass & Upgrade Screens in `references/screens-and-navigation.md` + Pass Card contract in `references/component-contracts.md` |
-| Build a rail | Read Rail System in `references/spacing-and-grid.md` + Rail contract in `references/component-contracts.md` before writing code |
-| Add or change a token | Edit tokens.json → run build.py → update CHANGELOG.md |
-| Add or choose icons | Read `references/icons.md` → use only `icons/svg/` or `icons/sprite.svg` → no Lucide / third-party icons |
-| Audit icon library | Run `python3 tools/audit-icons.py` → fix high-risk (exit 1) issues before shipping |
+| Generate UI (mobile / web / TV) | 1. Classify platform. 2. Read `references/component-contracts.md` + `references/tokens-and-components.md`. 3. Run Generation Decision Gate. 4. Build → `bash tokens/validate.sh` → fix ERRs → write `qa-report.md`. 5. Deliver 4 files: `index.html`, `styles.css`, `README.md`, `qa-report.md`. |
+| Use or build a component | Read `references/component-contracts.md` first. Compose from contracted spec. Never re-implement a contracted component from scratch. |
+| Choose or add an icon | Read `references/icons.md` → use `icons/svg/` or `icons/sprite.svg` only → no Lucide, no third-party. Report gap in `qa-report.md`. |
+| Choose a colour | Read `references/colour-governance.md` → use token only → no raw hex. If no token exists: NON-NEGOTIABLE ADHERENCE RULE format. |
+| Set spacing or layout | Read `references/spacing-and-grid.md` → use 8px-scale tokens → no raw px for grid or spacing. |
+| Add motion or animation | Read `references/motion.md` → use easing and duration tokens → no raw `cubic-bezier()` or raw `ms` values. |
+| Use a logo | Read `references/logos.md` → use `logos/` SVGs only → never recreate, recolour, or scale below minimum size. |
+| Task outside DLS scope | STOP. Use NON-NEGOTIABLE ADHERENCE RULE format. Get user approval before generating. No personal design decision. |
+| Review existing UI | Run `bash tokens/validate.sh path/to/file` → check Do/Don't list → write `qa-report.md`. |
+| Redesign an existing screen | Identify violations → fix against governance docs → validate → deliver `qa-report.md`. |
+| Build a TV screen | Read TV sections in `references/motion.md`, `references/screens-and-navigation.md`, `references/sizing-scale.md` before writing any code. |
+| Build a pass or subscription screen | Read Pass & Upgrade Screens in `references/screens-and-navigation.md` + Pass Card contract in `references/component-contracts.md`. |
+| Build a rail | Read Rail System in `references/spacing-and-grid.md` + Rail contract in `references/component-contracts.md`. |
+| Add or change a token | Edit `tokens/tokens.json` → run `python3 tokens/build.py` → update `CHANGELOG.md`. |
+| Audit icon library | Run `python3 tools/audit-icons.py` → fix high-risk (exit 1) violations before shipping. |
+
+---
+
+## Post-Activation Default
+
+After this skill is activated in a session, every response involving **UI, design, icons, logos, motion, colour, spacing, or copy** must follow this skill — even if the user does not mention the skill again.
+
+**Applies to:** full screens, single components, inline CSS edits, design feedback, icon selection, colour choices, copy suggestions — anything that touches the JioGames visual system.
+
+**Does not apply to:** unrelated server logic, data fetching, pure tests, or documentation with no design relevance.
+
+If in doubt: apply the skill. Over-applying is safer than under-applying.
 
 ---
 
@@ -292,40 +417,6 @@ If details are missing, make the safest JioGames-compliant assumption and docume
 Stop and ask only when:
 - TV vs Mobile/Web is explicitly unclear and the work would be unusable if wrong (TV has no sheets, no hover, D-pad only)
 - A new component is needed that has no contract and cannot be approximated by composition
-
----
-
-## NON-NEGOTIABLE ADHERENCE RULE
-
-This skill is a design contract, not inspiration.
-
-When generating, editing, or reviewing JioGames UI:
-
-1. Follow the existing DLS exactly.
-2. Do not invent new colours, spacing, radius, typography, motion, icon styles, component variants, or layout patterns.
-3. Do not silently "improve," "modernise," "reinterpret," or "simplify" the system.
-4. Do not use generic AI defaults when the DLS already defines a rule.
-5. Do not replace a missing rule with a personal design decision.
-6. Do not create one-off exceptions.
-
-**If the requested output cannot be created using the current DLS, STOP and use this exact format:**
-
-> The current JioGames DLS does not define this clearly.
-> I need your approval before changing or extending the system.
->
-> Missing / conflicting area:
->
-> * [state the gap]
->
-> Recommended options:
->
-> 1. Use the closest existing DLS rule: [option]
-> 2. Add a new governed rule: [option]
-> 3. Treat this as a one-off exception: [option]
->
-> Which direction should I follow?
-
-Until the user answers, do not generate the final UI.
 
 ---
 
@@ -422,13 +513,26 @@ When artwork is not provided:
 
 ---
 
-## Final Response Format
+## Final Response Rule
 
-When work is complete, respond with:
+**Every generation response must include these 4 files:**
 
-1. **Files created or changed** — names and one-line description of each
+| File | Content |
+|---|---|
+| `index.html` | Markup. `<link rel="stylesheet" href="tokens/tokens.css">` must be first stylesheet. No inline styles. |
+| `styles.css` | Token-only CSS. No raw hex or raw px literals in component rules. |
+| `README.md` | Platform declared. Components used listed. All assumptions documented. |
+| `qa-report.md` | `validate.sh` exit code. All ERRs resolved. All WARNs listed with status (resolved / accepted + reason). |
+
+**Never omit `qa-report.md`.** It is the audit trail proving the output was validated against the DLS.
+
+**File count exception:** Component-only tasks may omit `index.html` if only `styles.css` is relevant. Still require `qa-report.md` and `README.md`.
+
+When responding after generation:
+
+1. **Files delivered** — name and one-line description of each
 2. **What the design does** — screen purpose, user flow, primary action
-3. **Components used** — list contracted components composed
-4. **Validation result** — exit code, ERRORs resolved, WARNs with status
+3. **Components used** — contracted components composed
+4. **Validation result** — validate.sh exit code, ERRs resolved, WARNs with status
 5. **Assumptions made** — anything inferred from ambiguous input
 6. **Manual checks remaining** — things validate.sh cannot catch (visual QA, content review, device testing)

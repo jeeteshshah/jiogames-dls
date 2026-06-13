@@ -1,0 +1,65 @@
+/* JioGames DLS — Rail component
+   Horizontal scroll rail with snap. Used for game cards across all platforms.
+   All values must use var(--token) — no raw hex or raw px.
+*/
+
+/* ── Rail container ────────────────────── */
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+  scroll-snap-type: x mandatory;
+}
+
+/* ── Header row ────────────────────────── */
+.rail__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 var(--gutter);
+}
+
+.rail__title {
+  font-size: var(--text-h5);
+  font-weight: 700;
+  color: var(--text);
+  line-height: var(--lh-tight);
+}
+
+.rail__see-all {
+  font-size: var(--text-label);
+  font-weight: 500;
+  color: var(--jio);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.rail__see-all:focus-visible {
+  outline: none;
+  box-shadow: var(--jio-glow);
+  border-radius: var(--r4);
+}
+
+/* ── Scrollable track ──────────────────── */
+.rail__track {
+  display: flex;
+  gap: var(--space-1-5);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 var(--gutter) var(--space-1);
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  /* hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.rail__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Individual rail item ──────────────── */
+.rail__item {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}

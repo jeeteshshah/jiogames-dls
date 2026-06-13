@@ -1,0 +1,44 @@
+/* JioGames DLS — TV screen styles
+   D-pad only. No hover. No touch sheets. No bottom navigation.
+   Focus rings are mandatory — every interactive element needs :focus-visible with jio-glow.
+*/
+
+/* ── Layout ────────────────────────────── */
+.tv-frame {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'JioType', sans-serif;
+  color: var(--text);
+}
+
+.tv-safe {
+  position: absolute;
+  inset: var(--tv-safe);
+  display: flex;
+  gap: var(--space-6);
+}
+
+.tv-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Focus ring — mandatory for all interactive TV elements */
+.focusable:focus,
+.focusable:focus-visible {
+  outline: none;
+  box-shadow: var(--jio-glow);
+  transform: scale(1.05);
+  transition: transform var(--dur-fast) var(--spring), box-shadow var(--dur-fast) var(--spring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focusable:focus,
+  .focusable:focus-visible {
+    transition: none;
+    transform: none;
+  }
+}

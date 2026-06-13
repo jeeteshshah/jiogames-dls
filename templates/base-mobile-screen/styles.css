@@ -1,0 +1,32 @@
+/* JioGames DLS — Mobile screen styles
+   Import tokens first. Never edit tokens.css directly.
+   All values must use var(--token) — no raw hex or raw px in component rules.
+*/
+
+/* ── Layout ────────────────────────────── */
+.phone-frame {
+  width: var(--frame-mobile-w);
+  height: var(--frame-mobile-h);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'JioType', sans-serif;
+  color: var(--text);
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.status-bar {
+  height: var(--status-bar-h);
+  flex-shrink: 0;
+}
+
+.screen-content {
+  padding: 0 var(--gutter);
+}

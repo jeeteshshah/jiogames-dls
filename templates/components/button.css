@@ -1,0 +1,82 @@
+/* JioGames DLS — Button component
+   All values must use var(--token) — no raw hex or raw px.
+*/
+
+/* ── Base ──────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  height: var(--ctrl-h);
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: var(--pill);
+  font-family: 'JioType', sans-serif;
+  font-size: var(--text-body);
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: var(--disabled-opacity);
+  pointer-events: none;
+}
+
+/* ── Primary ───────────────────────────── */
+.btn-primary {
+  background: var(--jio);
+  color: var(--text-inv);
+}
+
+.btn-primary:hover {
+  background: var(--jio-light);
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: var(--jio-glow);
+}
+
+/* ── Secondary (outlined) ──────────────── */
+.btn-secondary {
+  background: transparent;
+  color: var(--jio);
+  border: var(--border-width) solid var(--jio);
+}
+
+.btn-secondary:hover {
+  background: var(--jio-subtle);
+}
+
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: var(--jio-glow);
+}
+
+/* ── Small variant ─────────────────────── */
+.btn-sm {
+  height: var(--ctrl-h-sm);
+  padding: 0 var(--space-3);
+  font-size: var(--text-label);
+}
+
+/* ── Reduced motion ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+  .btn:active {
+    transform: none;
+  }
+}

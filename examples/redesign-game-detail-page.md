@@ -31,7 +31,7 @@
 
 | Element | Token / pattern |
 |---|---|
-| Top bar (transparent) | `background: transparent` → scrolled: `rgba(6,8,15,.88)` + `backdrop-filter: blur(16px)` |
+| Top bar (transparent) | `background: transparent` → scrolled: approved glass recipe — `references/appbar.md` (scrolled bg spec) |
 | Hero height | `55vw; min-height: 220px; max-height: 340px` (screens §12 constants) |
 | Hero gradient | Approved overlay recipe — colour-governance.md §9 |
 | Game title | Weight 900, negative letter-spacing — NOT weight 700 |

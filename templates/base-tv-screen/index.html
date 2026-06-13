@@ -1,0 +1,36 @@
+<!-- JioGames DLS template — do not hand-edit tokens.css -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920" />
+  <title>JioGames — TV Screen</title>
+  <style>
+    @font-face { font-family:'JioType'; src:url('/Assets/font/JioType-Light.ttf') format('truetype'); font-weight:300; font-display:swap; }
+    @font-face { font-family:'JioType'; src:url('/Assets/font/JioType-Medium.ttf') format('truetype'); font-weight:500; font-display:swap; }
+    @font-face { font-family:'JioType'; src:url('/Assets/font/JioType-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'JioType'; src:url('/Assets/font/JioType-Black.ttf') format('truetype'); font-weight:900; font-display:swap; }
+  </style>
+  <link rel="stylesheet" href="../../tokens/tokens.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <!-- TV is D-pad only — no hover, no touch, no sheets -->
+  <!-- Focus-visible styles are mandatory for every interactive element -->
+
+  <div class="tv-frame">
+    <div class="tv-safe">
+
+      <!-- Sidebar nav placeholder — see references/appbar.md for TV nav sidebar -->
+
+      <main class="tv-content" role="main">
+        <!-- TV content goes here -->
+        <!-- Every interactive element must carry class="focusable" for :focus-visible ring -->
+      </main>
+
+    </div><!-- /.tv-safe -->
+  </div><!-- /.tv-frame -->
+
+</body>
+</html>

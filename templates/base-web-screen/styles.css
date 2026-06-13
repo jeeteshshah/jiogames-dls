@@ -1,0 +1,36 @@
+/* JioGames DLS — Web screen styles
+   Import tokens first. Never edit tokens.css directly.
+   All values must use var(--token) — no raw hex or raw px in component rules.
+*/
+
+/* ── Layout ────────────────────────────── */
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: 'JioType', sans-serif;
+  color: var(--text);
+}
+
+.container {
+  max-width: var(--container-web);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.page-content {
+  padding-top: var(--space-6);
+}
+
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  top: var(--space-1);
+  background: var(--jio);
+  color: var(--text-inv);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r4);
+  font-weight: 700;
+}
+.skip-to-main:focus {
+  left: var(--space-2);
+}

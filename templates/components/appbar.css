@@ -1,0 +1,114 @@
+/* JioGames DLS — AppBar component
+   Three variants: home (transparent/glass), detail (back-button overlay), inner (solid title)
+   Reference: references/appbar.md
+   All values must use var(--token) — no raw hex or raw px.
+*/
+
+/* ── Base AppBar ───────────────────────── */
+.appbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-appbar);
+  height: var(--appbar-h);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--gutter);
+  gap: var(--space-2);
+  background: transparent;
+  transition: background var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+
+/* Home variant — glass background after scroll */
+.appbar.header-scrolled {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border-bottom: var(--border-subtle);
+}
+
+/* Home variant — hide when scrolling down */
+.appbar.header-hidden {
+  transform: translateY(-110%);
+}
+
+/* ── Detail variant — back-button dark glass overlay ── */
+.appbar--detail {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+}
+
+/* ── Inner variant — solid bg with title and kebab ── */
+.appbar--inner {
+  background: var(--bg2);
+  border-bottom: var(--border-subtle);
+}
+
+.appbar--inner .appbar__title {
+  flex: 1;
+  font-size: var(--text-h5);
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Icon button ───────────────────────── */
+.icon-btn {
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  border-radius: var(--pill);
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.icon-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--jio-glow);
+}
+
+.icon-btn--dark {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+}
+
+/* ── PASS badge ────────────────────────── */
+.mp-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-0-5) var(--space-1);
+  background: var(--jio);
+  color: var(--text-inv);
+  border-radius: var(--r4);
+  font-size: var(--text-label);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+}
+
+/* ── Notification dot ──────────────────── */
+.has-notification .dot {
+  position: absolute;
+  top: var(--space-0-5);
+  right: var(--space-0-5);
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: var(--pill);
+  background: var(--jio);
+  border: var(--border-dot) solid var(--bg);
+  pointer-events: none;
+}

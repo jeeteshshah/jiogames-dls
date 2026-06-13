@@ -4,6 +4,24 @@ All notable changes to the design language system. Most recent first.
 
 ---
 
+## [Unreleased] — 2026-06-14 (patch 3)
+
+### Added
+- **SKILL.md: SKILL LOCK / SESSION PERSISTENCE RULE** — Once skill activates in a session, it locks ON for all remaining turns. Cannot deactivate by omission.
+- **SKILL.md: Activation Behaviour** — Defines how skill triggers, what to read on first activation, and what NOT to ask.
+- **SKILL.md: Generation Decision Gate** — 5-step mental decision tree to run before writing any UI/code. Gates on contracted component, token, icon, motion token, and logo.
+- **SKILL.md: Strict Generation Mode** — Documents `--strict` flag behavior: WARNs→ERRs, plus checks for missing imports, qa-report.md, README.md.
+- **SKILL.md: Post-Activation Default** — Explicit rule that every design/UI/icon/logo/colour/motion/copy response follows the DLS after activation, even with no explicit skill mention.
+- **SKILL.md: Task Routing expanded** — 15-row table covering: generate UI, use component, icon, colour, spacing, motion, logo, task outside DLS, review, redesign, TV, pass screen, rail, token change, icon audit.
+- **SKILL.md: Final Response Rule** — Mandatory 4-file output contract (index.html, styles.css, README.md, qa-report.md) with explicit "never omit qa-report.md" rule.
+- **`tokens/validate.sh`: `--strict` mode** — Upgrades all WARNs to ERRs. Adds 3 strict-only checks: missing tokens.css import, missing qa-report.md, missing README.md in screen output directories.
+- **`templates/`** — Starter templates: base-mobile-screen, base-web-screen, base-tv-screen (index.html + styles.css each), plus components/ (appbar.css, button.css, card.css, rail.css). All token-only CSS, no raw values.
+
+### Changed
+- **SKILL.md: NON-NEGOTIABLE ADHERENCE RULE** — Moved from bottom of file to top (immediately after HARD STOPS) so it is encountered first in every session.
+- **`examples/create-mobile-pass-screen.md`** — Removed raw hex values (`#0e1a14`, `#0a1f14`, `#ffcf5c`) from Key decisions table; replaced with references to colour-governance.md §9. Fixed perk check icon from `stroke: var(--jio)` to `fill: currentColor` (DLS is solid-glyph, no stroke). Pass naming: "Ultimate" → "All Screen".
+- **`examples/redesign-game-detail-page.md`** — Removed raw `rgba(6,8,15,.88)` from scrolled AppBar entry; replaced with reference to appbar.md scrolled bg spec.
+
 ## [Unreleased] — 2026-06-14 (patch 2)
 
 ### Added

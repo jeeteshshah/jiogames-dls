@@ -61,6 +61,12 @@ jiogames-dls/
 │   ├── audit-icons.py          ← Icon filename + content auditor
 │   ├── version.sh              ← Design version history
 │   └── visual-test.py          ← Playwright visual regression
+├── templates/
+│   ├── README.md                   ← How to use templates
+│   ├── base-mobile-screen/         ← Mobile 393×852px starter (index.html + styles.css)
+│   ├── base-web-screen/            ← Web max-1280px starter (index.html + styles.css)
+│   ├── base-tv-screen/             ← TV 1920×1080px starter (index.html + styles.css)
+│   └── components/                 ← Component CSS starters (appbar, button, card, rail)
 └── examples/
     ├── create-mobile-pass-screen.md
     ├── redesign-game-detail-page.md
@@ -75,9 +81,10 @@ jiogames-dls/
 Edit `tokens/tokens.json` → regenerate → validate:
 
 ```bash
-python3 tokens/build.py          # regenerate tokens.css
-python3 tokens/build.py --check  # CI mode (exit 1 if stale)
-bash tokens/validate.sh .        # lint for drift violations
+python3 tokens/build.py                              # regenerate tokens.css
+python3 tokens/build.py --check                      # CI mode (exit 1 if stale)
+bash tokens/validate.sh .                            # lint for drift violations
+bash tokens/validate.sh --strict path/to/generated/  # strict mode — WARNs become ERRs
 ```
 
 **Never hand-edit `tokens.css`** — fully generated from `tokens.json`.
@@ -97,8 +104,9 @@ Runs 4 checks in order:
 4. Visual regression — Playwright screenshot diff against goldens
 
 ```bash
-SKIP_VISUAL=1 bash tools/ci.sh      # skip visual regression
-bash tools/ci.sh path/to/file       # check specific file (steps 1+2 only)
+SKIP_VISUAL=1 bash tools/ci.sh                      # skip visual regression
+bash tools/ci.sh path/to/file                        # check specific file (steps 1+2 only)
+bash tokens/validate.sh --strict path/to/generated/  # strict mode (WARNs → ERRs + extra checks)
 ```
 
 **First-time visual regression setup:**

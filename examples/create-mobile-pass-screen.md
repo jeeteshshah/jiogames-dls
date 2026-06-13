@@ -32,8 +32,8 @@
 | Element | Token / pattern |
 |---|---|
 | Screen bg | `var(--bg)` |
-| Mobile pass card bg | `#0e1a14` (approved gradient — colour-governance.md §9) |
-| Ultimate pass card bg | `linear-gradient(135deg, #0a1f14 …)` (approved recipe) |
+| Mobile pass card bg | Approved surface recipe — `references/colour-governance.md` §9 |
+| All Screen pass card bg | Approved gradient recipe — `references/colour-governance.md` §9 |
 | Pass name | `.text-card-title` weight 900 `var(--text)` |
 | Price | `.text-price` weight 900 `var(--text)` — NOT `var(--text2)` |
 | CTA bg | `var(--jio)` (Mobile) / `var(--ultimate)` (Ultimate) |
@@ -41,8 +41,8 @@
 | CTA height | `var(--ctrl-h)` — never `54px` |
 | CTA radius | `var(--pill)` — never `100px` |
 | Ultimate accent | `var(--ultimate)` — never blue |
-| Perk check icon | `stroke: var(--jio)` |
-| "Most Popular" badge | `background: linear-gradient(90deg, var(--popular-gold), #ffcf5c)` (approved recipe) |
+| Perk check icon | `color: var(--jio); fill: currentColor` — solid glyph from `icons/svg/` |
+| "Most Popular" badge | Approved gradient recipe — `references/colour-governance.md` §9 |
 | Perks gap | `var(--space-1)` — never `8px` |
 | Card radius | `var(--r7)` — never `20px` |
 | Card padding | `var(--card-padding)` |

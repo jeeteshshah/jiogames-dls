@@ -1,12 +1,22 @@
 #!/usr/bin/env bash
 # ============================================================
 # JioGames DLS — drift validator (zero dependencies)
-# Greps CSS/HTML for violations of the design system. 14 checks.
-# Usage:  ./validate.sh <file-or-dir> [<file-or-dir> ...]
+# Greps CSS/HTML for violations of the design system. 14 checks + strict mode.
+# Usage:  ./validate.sh [--strict] <file-or-dir> [<file-or-dir> ...]
 # Exit:   0 = clean, 1 = violations found
 # Excludes tokens.css (the one place literals are allowed).
+#
+# --strict: upgrades all WARNs to ERRs and adds checks for
+#   missing tokens.css import, missing qa-report.md/README.md,
+#   fill:none on icons, and --s-N token aliases.
 # ============================================================
 set -uo pipefail
+
+STRICT=0
+if [ "${1:-}" = "--strict" ]; then
+  STRICT=1
+  shift
+fi
 
 targets=("$@")
 [ ${#targets[@]} -eq 0 ] && targets=(".")
@@ -21,6 +31,8 @@ files=$(find "${targets[@]}" -type f \( -name '*.css' -o -name '*.html' \) 2>/de
 report() { # severity, label, grep-result
   local sev="$1" label="$2" hits="$3"
   [ -z "$hits" ] && return
+  # In strict mode: all WARNs become ERRs
+  if [ "$STRICT" = "1" ] && [ "$sev" = "WARN" ]; then sev="ERR"; fi
   if [ "$sev" = "ERR" ]; then fail=1; echo "${RED}✗ ERROR${OFF}  $label"; else echo "${YEL}⚠ WARN ${OFF}  $label"; fi
   echo "$hits" | sed "s/^/    ${DIM}/;s/\$/${OFF}/"
 }
@@ -99,7 +111,47 @@ report WARN "Non-DLS alias var(--s-N) — migrate to --space-1 / --space-1-5 / -
 report ERR "outline:none — must pair with box-shadow glow focus ring (never remove focus without replacement)" \
   "$(scan 'outline\s*:\s*0|outline\s*:\s*none')"
 
+# ── Strict-only checks (--strict flag required) ──────────────────────────────
+
+if [ "$STRICT" = "1" ]; then
+  echo ""
+  echo "(strict mode)"
+
+  # S1. HTML screens missing tokens.css import
+  html_files=$(find "${targets[@]}" -name '*.html' 2>/dev/null | grep -v 'tokens.css' || true)
+  if [ -n "$html_files" ]; then
+    missing_import=""
+    while IFS= read -r f; do
+      grep -q 'tokens\.css' "$f" 2>/dev/null || missing_import="${missing_import}${f}\n"
+    done <<< "$html_files"
+    if [ -n "$missing_import" ]; then
+      fail=1
+      echo "${RED}✗ ERROR${OFF}  Missing tokens/tokens.css import in HTML"
+      printf "%b" "$missing_import" | sed "s/^/    ${DIM}/;s/\$/${OFF}/"
+    fi
+  fi
+
+  # S2. Missing qa-report.md in any target directory containing index.html
+  while IFS= read -r dir; do
+    if [ ! -f "$dir/qa-report.md" ]; then
+      fail=1
+      echo "${RED}✗ ERROR${OFF}  Missing qa-report.md in $dir — every generated screen requires one"
+    fi
+  done < <(find "${targets[@]}" -name 'index.html' -exec dirname {} \; 2>/dev/null | sort -u)
+
+  # S3. Missing README.md in any target directory containing index.html
+  while IFS= read -r dir; do
+    if [ ! -f "$dir/README.md" ]; then
+      fail=1
+      echo "${RED}✗ ERROR${OFF}  Missing README.md in $dir — platform, components, and assumptions must be documented"
+    fi
+  done < <(find "${targets[@]}" -name 'index.html' -exec dirname {} \; 2>/dev/null | sort -u)
+fi
+
 echo "────────────────────────────────"
+if [ "$STRICT" = "1" ]; then
+  echo "(strict mode active — all WARNs treated as ERRs)"
+fi
 if [ $fail -eq 0 ]; then
   echo "${GRN}✓ No blocking violations.${OFF}"
 else
